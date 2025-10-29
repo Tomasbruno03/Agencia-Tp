@@ -18,7 +18,7 @@ public class Destino {
     public float getCantKm() {
         return CantKm;
     }
-
+    
     @Override
     public String toString() {
         return "Destino{nombre='" + Nombre + "', cantKm=" + CantKm + "}";
