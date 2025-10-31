@@ -1,0 +1,50 @@
+package model;
+
+import java.util.Objects;
+
+public class ResponsableABordo implements Comparable<ResponsableABordo> {
+    private String nombre;
+    private Boolean EstaDisp; //S o N
+    private String Dni;
+    private float SueldoXViaje;
+
+    public ResponsableABordo(String nombre, Boolean EstaDisp, String Dni, float SueldoXViaje){
+        this.nombre = nombre;
+        this.EstaDisp = EstaDisp;
+        this.Dni = Dni;
+        this.SueldoXViaje = SueldoXViaje;
+    }
+    public String GetNombre(){
+        return nombre;
+    }
+    public Boolean EstaDisp(){
+        return EstaDisp;
+    }
+    public String GetDni(){
+        return Dni;
+    }
+    public float GetSueldo(){
+        return SueldoXViaje;
+    }
+
+    public void setEstaDisp(Boolean estaDisp) { //unico set que podriamos llegar a necesitar, dar de baja o no el responsable
+        EstaDisp = estaDisp;
+    }
+    @Override
+    public int compareTo(ResponsableABordo otro){
+        return this.Dni.compareTo(otro.GetDni()); //devuelve 0 si son iguales,-1 o 1
+    }
+    @Override
+    public Boolean equals(Object o){
+        if(this == o) //son el mismo objeto en memoria?
+            return true;
+        if(o == null || getClass() != o.getClass()) // o el objeto es nulo o son de clases distintas
+            return false;
+        ResponsableABordo that  = (ResponsableABordo) o; //casteo necesario para usar una variable de tipo clase
+        return Objects.equals(this.Dni,that.Dni);
+    }
+    @Override
+    public String toString(){
+        return "Responsable [Nombre: " + nombre + ", DNI: " + Dni + ", Disponible: " + EstaDisp + "]";
+    }
+}
