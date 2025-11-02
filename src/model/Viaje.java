@@ -71,6 +71,28 @@ public abstract class Viaje implements Comparable <Viaje>{
     public int hashCode() {
         return Objects.hash(idViaje, nombre, estadoActual);
     }
+    public void iniciar() {
+        if (estadoActual != estado.PENDIENTE)
+            throw new IllegalStateException("El viaje ya fue iniciado o finalizado.");
+        if (Responsables.isEmpty())
+            throw new IllegalStateException("Los viajes largos requieren al menos un responsable.");
+        estadoActual = estado.EN_CURSO;
+    }
 
+    public void avanzarKm(float delta) {
+        if (estadoActual != estado.EN_CURSO)
+            throw new IllegalStateException("Solo se puede avanzar un viaje en curso.");
+        if (delta <= 0)
+            throw new IllegalArgumentException("La distancia debe ser positiva.");
+        avanceKmRecorridos += delta;
+    }
+
+    public void finalizar() {
+        if (estadoActual != estado.EN_CURSO)
+            throw new IllegalStateException("Solo se puede finalizar un viaje en curso.");
+        estadoActual = estado.FINALIZADO;
+        //liberarResponsables(); #### Aun no esta definida
+    }
+    public abstract float calcularCosto();
 
 }
