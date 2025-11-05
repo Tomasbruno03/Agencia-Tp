@@ -64,7 +64,7 @@ public abstract class Viaje implements Comparable <Viaje>{
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         Viaje viaje = (Viaje) o;
-        return idViaje == viaje.idViaje;
+        return idViaje == viaje.getIdViaje();
     }
 
     @Override
