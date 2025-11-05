@@ -7,12 +7,12 @@ public class Auto extends Transporte {
     private float ValorPorKmRecorrido;
 
 public Auto (String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
-    super(patente, capacidadPasajeros, disponible, velocidadPromedioXhora);
+    super(patente, 4, disponible, velocidadPromedioXhora);
     this.ValorBasePorViaje = _ValorBasePorViaje;
     this.ValorPorKmRecorrido = _ValorPorKmRecorrido;
 } //Constructor tengo que cambiar el nombre de las variables como en c?
 
-public float  getValorBasePorViaje(){return ValorBasePorViaje; //Tengo que chequear que sea disntinto de 0?
+public float  getValorBasePorViaje(){return ValorBasePorViaje;
 }
 
 public void setValorBasePorViaje(float ValorBasePorViaje){

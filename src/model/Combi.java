@@ -1,14 +1,15 @@
 package model;
 
+import java.util.Objects;
 
 public class Combi extends Transporte {
 
     private float valorBasePorViaje;
     private float valorPorPasajeroPorKmRecorrido;
 
-    public Combi(String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora, float valorBasePorViaje, float valorPorPasajeroPorKmRecorrido) {
+    public Combi(String patente, boolean disponible, float velocidadPromedioXhora, float valorBasePorViaje, float valorPorPasajeroPorKmRecorrido) {
 
-        super(patente, capacidadPasajeros, disponible, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?
+        super(patente, 16, disponible, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?
         this.valorBasePorViaje = valorBasePorViaje;
         this.valorPorPasajeroPorKmRecorrido = valorPorPasajeroPorKmRecorrido;
     } //Tengo que cambiar los nombres como en c??
@@ -30,6 +31,9 @@ public class Combi extends Transporte {
         if(valorPorPasajeroPorKmRecorrido>0){
         this.valorPorPasajeroPorKmRecorrido = valorPorPasajeroPorKmRecorrido;
     }    }
+
+    @Override //FALTA
+    public float CalcularCosto();
 
     @Override
     public String toString() {
