@@ -1,0 +1,67 @@
+{
+  "destinos": [
+    {
+      "nombre": "Mar del Plata",
+      "cantKm": 400.5
+    },
+    {
+      "nombre": "Rosario",
+      "cantKm": 300.0
+    },
+    {
+      "nombre": "Bariloche",
+      "cantKm": 1550.8
+    },
+    {
+      "nombre": "Mendoza",
+      "cantKm": 1050.0
+    }
+  ],
+  "responsables": [
+    {
+      "nombre": "Ana Gomez",
+      "dni": "27240600",
+      "sueldoPorViaje": 50000.0
+    },
+    {
+      "nombre": "Carlos Ruiz",
+      "dni": "35351233",
+      "sueldoPorViaje": 52000.0
+    }
+  ],
+  "transportes": [
+    {
+      "tipo": "Auto",
+      "patente": "AA123BB",
+      "capacidadPasajeros": 4,
+      "velocidadPromedioXHora": 90.0,
+      "valorBasePorViaje": 10000.0,
+      "valorPorKmRecorrido": 150.0
+    },
+    {
+      "tipo": "Combi",
+      "patente": "AD456CC",
+      "capacidadPasajeros": 15,
+      "velocidadPromedioXHora": 80.0,
+      "valorBasePorViaje": 40000.0,
+      "valorPorPasajeroPorKmRecorrido": 20.0
+    },
+    {
+      "tipo": "ColectivoSemiCama",
+      "patente": "AE789DD",
+      "capacidadPasajeros": 40,
+      "velocidadPromedioXHora": 75.0,
+      "valorPorPasajeroPorKmRecorrido": 30.0
+    },
+    {
+      "tipo": "ColectivoCocheCama",
+      "patente": "AF111EG",
+      "capacidadPasajeros": 32,
+      "velocidadPromedioXHora": 75.0,
+      "cantSemiCama": 6,
+      "cantCama": 26,
+      "valorPorPasajeroPorKmRecorrido": 30.0,
+      "valorPlazaTipoCamaPorKmRecorrido": 50.0
+    }
+  ]
+}
