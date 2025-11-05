@@ -10,8 +10,8 @@ private float ValorPlazaTipoCamaPorKmRecorrido;
 
     public ColectivoCocheCama (String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora, int CantSemiCama,int CantCama,float ValorPorPasajeroPorKmRecorrido, float ValorPlazaTipoCamaPorKmRecorrido){
         super(patente, 32, disponible, velocidadPromedioXhora);
-        this.CantSemiCama = 0;
-        this.CantCama = 0; //revisar
+        this.CantSemiCama = 6;
+        this.CantCama = 26;
         this.ValorPorPasajeroPorKmRecorrido= ValorPorPasajeroPorKmRecorrido;
         this.ValorPlazaTipoCamaPorKmRecorrido= ValorPlazaTipoCamaPorKmRecorrido;
     }
