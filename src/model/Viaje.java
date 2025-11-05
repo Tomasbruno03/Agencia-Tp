@@ -18,6 +18,7 @@ public abstract class Viaje implements Comparable <Viaje>{
     private estado estadoActual;
     private Set<ResponsableABordo>Responsables= new HashSet<>();
     private float avanceKmRecorridos;
+    private Transporte TransporteAsignado;
 
 
     // CONSTRUCTOR
