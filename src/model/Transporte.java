@@ -9,12 +9,17 @@ public abstract class Transporte implements Serializable{
     private Set<Viaje> listaViajes;
     private boolean disponible;
     private float velocidadPromedioXhora;
-
-    public Transporte(String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora){
+    /**
+     * Constructor modificado.
+     * No pide 'disponible' como parámetro, sino que lo asigna
+     * como 'true' por defecto.
+     * Esto se alinea con la lógica de carga del JSON.
+     */
+    public Transporte(String patente, int capacidadPasajeros, float velocidadPromedioXhora){
         this.patente = patente;
         this.capacidadPasajeros = capacidadPasajeros;
         listaViajes = new TreeSet<>(); // Usa compareTo() de Viaje
-        this.disponible = disponible;
+        this.disponible = true;
         this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
@@ -80,3 +85,13 @@ public abstract class Transporte implements Serializable{
                 + ", Viajes: " + viajesNombres + " ]";
     }
 }
+/**
+ * Calcula el costo del viaje basado en los atributos específicos
+ * de cada tipo de transporte (Auto, Combi, etc.).
+ * Este método DEBE ser implementado por todas las clases hijas.
+ *
+ * @param kilometros Los kilómetros del viaje (del Destino).
+ * @param pasajeros La cantidad de pasajeros en el viaje.
+ * @return El costo total del transporte para ese viaje.
+ */
+public abstract float calcularCosto(float kilometros, int pasajeros);
