@@ -45,14 +45,38 @@ public class Agencia implements Serializable {
         return Collections.unmodifiableSet(SetResponsables);
     }
 
-    public agregarDestino(Destino d){
-        try {
+    public void agregarDestino(Destino d) {
+        if (DestinosDisponibles.contains(d)) {
+            throw new DestinoYaExisteException(d.getNombre());
+        }
+        DestinosDisponibles.add(d);
+    }
 
-        }catch (DestinoYaExisteException e)
-        {
-            System.err.println(e.getMessage());
+    public Set<Transporte> transportesPorDestino(Destino destino) {
+        return TreeMapaDestinos.getOrDefault(destino, Collections.emptySet());
+    }
+
+
+    public void Agregar_TransporteALista(Transporte t){
+        ListaTransporte.add(t);
+    }
+
+    public void agregarTransportePorDestino(Transporte t) {
+        for (Viaje viaje : t.getListaViajes()) {
+            Destino destino = viaje.getDestinoDelViaje();
+            Set<Transporte> L = transportesPorDestino(destino);
+
+            if (L == null) {
+                L = new HashSet<>();
+                L.add(t);
+                TreeMapaDestinos.put(destino, L);
+            } else {
+                L.add(t);
+            }
         }
     }
+
+
 
 
 
