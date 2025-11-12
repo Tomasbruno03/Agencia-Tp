@@ -2,6 +2,8 @@ package model;
 
 import exceptions.ValidacionException;
 
+import java.util.Iterator;
+
 public class LargaDistancia extends Viaje{
 
     public LargaDistancia (int idVia, String nom, Destino destinoViaje){
@@ -10,6 +12,13 @@ public class LargaDistancia extends Viaje{
 
     @Override
     public float calcularCostoBase() {
-        return 0;
+        float Sueldo=0;
+        Iterator<ResponsableABordo> r= this.getResponsables().iterator();
+        while(r.hasNext()){
+
+            ResponsableABordo Respon=r.next();
+            Sueldo+=Respon.GetSueldo();
+        }
+        return Sueldo;
     }
 }

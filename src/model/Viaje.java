@@ -3,10 +3,7 @@ package model;
 import exceptions.ValidacionException;
 
 import java.beans.DesignMode;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 ;
 
@@ -61,6 +58,10 @@ public abstract class Viaje implements Comparable <Viaje>{
         return avanceKmRecorridos;
     }
 
+    public Set<ResponsableABordo> getResponsables() {
+        return Collections.unmodifiableSet(Responsables);
+    }
+
     public Transporte getTransporteAsignado() {
         return TransporteAsignado;
     }
@@ -84,6 +85,10 @@ public abstract class Viaje implements Comparable <Viaje>{
 
 
     public abstract float calcularCostoBase();
+    public float calcularCostoFinal()
+    {
+        return calcularCostoBase() + TransporteAsignado.calculaCostePorViaje(destinoDelViaje.getCantKm(),cantPasajeros);
+    }
 
 
     public void iniciar() {

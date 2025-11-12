@@ -46,6 +46,8 @@ public abstract class Transporte implements Serializable{
             this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
+    public abstract float  calculaCostePorViaje(float kms, int ps);
+
 
     @Override
     public boolean equals(Object o) {

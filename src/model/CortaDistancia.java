@@ -29,6 +29,6 @@ public class CortaDistancia extends Viaje{
 
     @Override
     public float calcularCostoBase() {
-        return 0;
+        return cobrobase;
     }
 }
