@@ -3,8 +3,8 @@ package model;
 public class CortaDistancia extends Viaje{
     public float cobrobase;
 
-    public CortaDistancia(int idVia, String nom, Destino destinoViaje,float cobrobase){
-        super(idVia,nom,destinoViaje);
+    public CortaDistancia(int idVia, String nom, Destino destinoViaje,float cobrobase,Transporte t){
+        super(idVia,nom,destinoViaje,t);
         this.cobrobase=cobrobase;
     }
 
@@ -19,5 +19,10 @@ public class CortaDistancia extends Viaje{
     @Override
     public String toString(){
         return "CortaDistancia [Cobro base en viajes de corta distancia:" + cobrobase + " ]";
+    }
+
+    @Override
+    public float calcularCosto() {
+        return 0;
     }
 }
