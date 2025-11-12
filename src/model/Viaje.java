@@ -1,7 +1,10 @@
 package model;
 
+import exceptions.ValidacionException;
+
 import java.beans.DesignMode;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Objects;
 import java.util.Set;
 
@@ -22,14 +25,14 @@ public abstract class Viaje implements Comparable <Viaje>{
 
 
     // CONSTRUCTOR
-    public Viaje(int idVia, String nom, Destino destinoViaje,Transporte t) {
+    public Viaje(int idVia, String nom, Destino destinoViaje) {
         this.idViaje = idVia;
         this.nombre = nom;
         this.destinoDelViaje = destinoViaje;
         this.cantPasajeros = 1;
         this.estadoActual = estado.PENDIENTE; // Estado inicial
         this.avanceKmRecorridos = 0;
-        this.TransporteAsignado=t;
+        this.TransporteAsignado=null;
 
     }
     /*
@@ -79,11 +82,15 @@ public abstract class Viaje implements Comparable <Viaje>{
         return Objects.hash(idViaje);
     }
 
+
+    public abstract float calcularCostoBase();
+
+
     public void iniciar() {
         if (estadoActual != estado.PENDIENTE)
             throw new IllegalStateException("El viaje ya fue iniciado o finalizado.");
-        if (Responsables.isEmpty())
-            throw new IllegalStateException("Los viajes largos requieren al menos un responsable.");
+        if (this.cantPasajeros <= 0)
+            throw new IllegalStateException("No se puede iniciar un viaje con 0 pasajeros.");
         estadoActual = estado.EN_CURSO;
     }
 
@@ -102,11 +109,18 @@ public abstract class Viaje implements Comparable <Viaje>{
         liberarResponsables();
     }
     public estado getEstado(){return estadoActual;};
-    public abstract float calcularCosto();
+
 
     public void liberarResponsables()
     {
-        Responsables.clear();
+        Iterator<ResponsableABordo> res=Responsables.iterator();
+        while (res.hasNext())
+        {
+            ResponsableABordo r=res.next();
+            r.AcumularKmRecorridos(avanceKmRecorridos);
+            r.Liberar();
+            res.remove();
+        }
     }
 
     public void AgregarResponsable(ResponsableABordo r)
@@ -119,21 +133,37 @@ public abstract class Viaje implements Comparable <Viaje>{
         this.Responsables.remove(r);
     }
 
-    public void AgregarPasajeros()
+    public void AgregarPasajeros(int n)
     {
-        if(TransporteAsignado!=null&&(cantPasajeros==TransporteAsignado.getCapacidadPasajeros())){
+        if(TransporteAsignado!=null&&(cantPasajeros+n>TransporteAsignado.getCapacidadPasajeros())){
             throw new IllegalStateException("No hay capacidad disponible en el transporte.");
         }else{
-            this.cantPasajeros++;
+            this.cantPasajeros+=n;
         }
 
+    }
+    public void AgregarUnPasajero()
+    {
+        this.AgregarPasajeros(1);
     }
 
     public void QuitarPasajeros()
     {
         this.cantPasajeros--;
     }
-    public void setTransporteAsignado(Transporte transporte) {
+    public void setTransporteAsignado(Transporte transporte) throws ValidacionException {
+        if (transporte == null) {
+            throw new ValidacionException("El transporte no puede ser nulo.");
+        }
+
+        if (transporte.getCapacidadPasajeros() < this.cantPasajeros) {
+            throw new ValidacionException("Capacidad excedida. El transporte solo permite " +
+                    transporte.getCapacidadPasajeros() + " pasajeros (este viaje tiene " + this.cantPasajeros + ").");
+        }
+
+        // 2. Validar las restricciones del TIPO de viaje (Doble Dispatch)
+        //this.validarRestriccionTransporte(transporte);
+
         this.TransporteAsignado = transporte;
     }
     public boolean estaPendiente() {

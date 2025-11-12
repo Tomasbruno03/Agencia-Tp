@@ -1,10 +1,12 @@
 package model;
 
+import exceptions.ValidacionException;
+
 public class CortaDistancia extends Viaje{
     public float cobrobase;
 
-    public CortaDistancia(int idVia, String nom, Destino destinoViaje,float cobrobase,Transporte t){
-        super(idVia,nom,destinoViaje,t);
+    public CortaDistancia(int idVia, String nom, Destino destinoViaje,float cobrobase){
+        super(idVia,nom,destinoViaje);
         this.cobrobase=cobrobase;
     }
 
@@ -21,8 +23,12 @@ public class CortaDistancia extends Viaje{
         return "CortaDistancia [Cobro base en viajes de corta distancia:" + cobrobase + " ]";
     }
 
+
+
+
+
     @Override
-    public float calcularCosto() {
+    public float calcularCostoBase() {
         return 0;
     }
 }

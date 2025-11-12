@@ -27,6 +27,7 @@ public abstract class Transporte implements Serializable{
         return Collections.unmodifiableSet(listaViajes);
     }
 
+
     public void agregarViaje(Viaje v) {
         if( v != null)
             listaViajes.add(v);
@@ -44,6 +45,7 @@ public abstract class Transporte implements Serializable{
         if(velocidadPromedioXhora > 0)
             this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
+
 
     @Override
     public boolean equals(Object o) {
