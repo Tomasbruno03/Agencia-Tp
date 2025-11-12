@@ -14,7 +14,7 @@ public abstract class Transporte implements Serializable{
         this.patente = patente;
         this.capacidadPasajeros = capacidadPasajeros;
         listaViajes = new TreeSet<>(); // Usa compareTo() de Viaje
-        this.disponible = disponible;
+        this.disponible = true;
         this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
@@ -44,6 +44,8 @@ public abstract class Transporte implements Serializable{
         if(velocidadPromedioXhora > 0)
             this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
+
+    public abstract float calcularCosto(float kilometros, int pasajeros);
 
     @Override
     public boolean equals(Object o) {
