@@ -35,13 +35,13 @@ public class ResponsableABordo implements Comparable<ResponsableABordo> {
         return this.Dni.compareTo(otro.GetDni()); //devuelve 0 si son iguales,-1 o 1
     }
     @Override
-    public Boolean equals(Object o){
+    public boolean equals(Object o){
         if(this == o) //son el mismo objeto en memoria?
             return true;
         if(o == null || getClass() != o.getClass()) // o el objeto es nulo o son de clases distintas
             return false;
         ResponsableABordo that  = (ResponsableABordo) o; //casteo necesario para usar una variable de tipo clase
-        return Objects.equals(this.Dni,that.Dni);
+        return Objects.equals(this.Dni,that.GetDni());
     }
     @Override
     public String toString(){
