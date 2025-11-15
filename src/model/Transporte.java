@@ -27,7 +27,9 @@ public abstract class Transporte implements Serializable{
         return Collections.unmodifiableSet(listaViajes);
     }
 
-
+    public boolean cumpleCondiciones(Destino d){
+        return true;
+    }
     public void agregarViaje(Viaje v) {
         if( v != null)
             listaViajes.add(v);

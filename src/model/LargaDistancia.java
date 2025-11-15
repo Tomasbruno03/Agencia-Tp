@@ -6,8 +6,8 @@ import java.util.Iterator;
 
 public class LargaDistancia extends Viaje{
 
-    public LargaDistancia (int idVia, String nom, Destino destinoViaje){
-        super(idVia,nom,destinoViaje);
+    public LargaDistancia (int idVia, String nom, Destino destinoViaje,Transporte t){
+        super(idVia,nom,destinoViaje,t);
     }
 
     @Override

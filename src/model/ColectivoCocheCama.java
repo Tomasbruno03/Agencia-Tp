@@ -33,6 +33,16 @@ private float ValorPlazaTipoCamaPorKmRecorrido;
     }
 
     @Override
+    public float calculaCostePorViaje(float kms, int ps) {
+        return 0;
+    }
+
+    @Override
+    public boolean cumpleCondiciones(Destino d){
+        return d.esLargaDistancia();
+    }
+
+    @Override
     public String toString(){
         return "ColectivoCocheCama [Cantidad de pasajes Semi Cama:" + CantSemiCama + ",Cantidad de pasajes Cama: " + CantCama + "Valor por pasajero por km recorrido:" + ValorPorPasajeroPorKmRecorrido + ",Valor por plaza tipo cama por km recorrido: " + ValorPlazaTipoCamaPorKmRecorrido +" ]";
     }
