@@ -41,4 +41,9 @@ public class Destino implements Comparable <Destino>{
         Destino that  = (Destino) o; //casteo necesario para usar una variable de tipo clase
         return Objects.equals(this.Nombre,that.getNombre());
     }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.Nombre);
+    }
 }

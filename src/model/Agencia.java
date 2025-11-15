@@ -76,6 +76,37 @@ public class Agencia implements Serializable {
         }
     }
 
+    public Transporte buscarTransportePorPatente(String patente){
+        for(Transporte t : ListaTransporte){
+            if(t.getPatente().equalsIgnoreCase(patente)){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public Destino buscarDestinoPorNombre(String nombre){
+        for(Destino d : DestinosDisponibles){
+            if(d.getNombre().equalsIgnoreCase(nombre)){
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public void asociarTransporteADestino(Destino destino, Transporte transporte){ //chequear con agregar transporte por destino?????
+        if(destino == null || transporte == null)
+            throw new IllegalArgumentException("Destiono o transporte es null.");
+
+        Set<Transporte> lista = TreeMapaDestinos.get(destino); //Obtiene el set
+
+        if(lista==null){ //Creo el set
+            lista = new HashSet<>();
+            TreeMapaDestinos.put(destino, lista);
+        }
+        lista.add(transporte); //Agregar transporte a la lista
+    }
+
 
 
 
