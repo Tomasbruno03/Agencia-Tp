@@ -86,7 +86,7 @@ public abstract class Viaje implements Comparable <Viaje>{
     public abstract float calcularCostoBase();
     public float calcularCostoFinal()
     {
-        return calcularCostoBase() + TransporteAsignado.calculaCostePorViaje(destinoDelViaje.getCantKm(),cantPasajeros);
+        return calcularCostoBase() + TransporteAsignado.calculaCostoPorViaje(destinoDelViaje.getCantKm(),cantPasajeros);
     }
 
 

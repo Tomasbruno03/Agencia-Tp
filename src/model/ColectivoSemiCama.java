@@ -20,8 +20,8 @@ public void setvalorPorPasajerosPorKmRecorrido(float valorPorPasajerosPorKmRecor
 }
 
     @Override
-    public float calculaCostePorViaje(float kms, int ps) {
-        return 0;
+    public float calculaCostoPorViaje(float kms, int ps) {
+        return valorPorPasajerosPorKmRecorrido * ps * kms;
     }
 
     @Override

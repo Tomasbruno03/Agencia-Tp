@@ -33,7 +33,9 @@ public class Combi extends Transporte {
 
 
     @Override
-    public float calculaCostePorViaje(float kms, int ps) { return 0; }
+    public float calculaCostoPorViaje(float kms, int ps) {
+        return valorBasePorViaje + (valorPorPasajeroPorKmRecorrido * ps * kms);
+    }
 
     @Override
     public String toString() {

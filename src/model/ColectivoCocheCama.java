@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Objects;
+import java.util.*;
 
 public class ColectivoCocheCama extends Transporte{
 private int CantSemiCama;
@@ -33,8 +33,13 @@ private float ValorPlazaTipoCamaPorKmRecorrido;
     }
 
     @Override
-    public float calculaCostePorViaje(float kms, int ps) {
-        return 0;
+    public float calculaCostoPorViaje(float kms, int ps) {
+        int pasajerosEnCama = Math.min(ps, CantCama); // hasta 26 camas
+
+        float costoBase = ValorPorPasajeroPorKmRecorrido * ps * kms;
+        float costoCamas = ValorPlazaTipoCamaPorKmRecorrido * pasajerosEnCama * kms;
+
+        return costoBase + costoCamas;
     }
 
     @Override

@@ -62,7 +62,7 @@ public abstract class Transporte implements Serializable{
             this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
-    public abstract float  calculaCostePorViaje(float kms, int ps);
+    public abstract float  calculaCostoPorViaje(float kms, int ps);
 
 
     @Override

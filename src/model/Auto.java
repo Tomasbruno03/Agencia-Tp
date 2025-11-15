@@ -12,8 +12,7 @@ public Auto (String patente, int capacidadPasajeros, float velocidadPromedioXhor
     this.ValorPorKmRecorrido = _ValorPorKmRecorrido;
 } //Constructor tengo que cambiar el nombre de las variables como en c?
 
-public float  getValorBasePorViaje(){return ValorBasePorViaje;
-}
+public float  getValorBasePorViaje(){ return ValorBasePorViaje; }
 
 public void setValorBasePorViaje(float ValorBasePorViaje){
     if(ValorBasePorViaje>0){
@@ -31,8 +30,8 @@ public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
     }
 
     @Override
-    public float calculaCostePorViaje(float kms, int ps) {
-        return 0;
+    public float calculaCostoPorViaje(float kms, int ps) {
+        return ValorBasePorViaje + (ValorPorKmRecorrido * kms);
     }
 
     @Override
