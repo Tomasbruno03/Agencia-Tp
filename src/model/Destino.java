@@ -42,6 +42,10 @@ public class Destino implements Comparable <Destino>{
         return Objects.equals(this.Nombre,that.getNombre());
     }
 
+    public boolean esLargaDistancia(){
+        return this.CantKm>100;
+    }
+
     @Override
     public int hashCode(){
         return Objects.hash(this.Nombre);

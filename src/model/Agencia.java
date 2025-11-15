@@ -107,6 +107,22 @@ public class Agencia implements Serializable {
         lista.add(transporte); //Agregar transporte a la lista
     }
 
+    public Viaje crearViaje(String nombreViaje, Destino destino, int cantPasajeros){
+        if(destino == null)
+            throw new IllegalArgumentException("Destino no existente"); //VER
+
+        Viaje nuevoViaje;
+
+        if(destino.esLargaDistancia()){
+            nuevoViaje = new LargaDistancia(nombreViaje,destino,cantPasajeros);
+        }else {
+            nuevoViaje = new CortaDistancia(nombreViaje,destino,cantPasajeros);
+        }
+
+        CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
+
+        return  nuevoViaje;
+    }
 
 
 
