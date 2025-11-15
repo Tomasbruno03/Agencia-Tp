@@ -19,7 +19,12 @@ public void setvalorPorPasajerosPorKmRecorrido(float valorPorPasajerosPorKmRecor
         this.valorPorPasajerosPorKmRecorrido=valorPorPasajerosPorKmRecorrido;
 }
 
-@Override
+    @Override
+    public float calculaCostePorViaje(float kms, int ps) {
+        return 0;
+    }
+
+    @Override
     public String toString(){
     return "ColectivoSemiCama [Valor Por Pasajeros Por Km Recorrido:" + valorPorPasajerosPorKmRecorrido + " ]";
 }

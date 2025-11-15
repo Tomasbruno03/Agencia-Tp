@@ -31,7 +31,17 @@ public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
     }
 
     @Override
+    public float calculaCostePorViaje(float kms, int ps) {
+        return 0;
+    }
+
+    @Override
     public String toString() {
     return "Auto [Valor Base Por viaje:" + ValorBasePorViaje + ",Valor por km recorrido: " + ValorPorKmRecorrido + " ]";
+    }
+
+    @Override
+    public boolean cumpleCondiciones(Destino d){
+        return !(d.esLargaDistancia());
     }
 }

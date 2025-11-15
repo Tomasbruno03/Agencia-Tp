@@ -10,26 +10,43 @@ public abstract class Transporte implements Serializable{
     private boolean disponible;
     private float velocidadPromedioXhora;
 
-    public Transporte(String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora){
+    public Transporte(String patente, int capacidadPasajeros, float velocidadPromedioXhora){
         this.patente = patente;
         this.capacidadPasajeros = capacidadPasajeros;
         listaViajes = new TreeSet<>(); // Usa compareTo() de Viaje
-        this.disponible = true;
         this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
     public String getPatente(){ return patente; }
     public int getCapacidadPasajeros(){ return capacidadPasajeros; }
-    public boolean estaDisponible(){ return disponible; }
+
     public float getVelocidadPromedioXhora(){ return velocidadPromedioXhora; }
 
     public Set<Viaje> getListaViajes() {
         return Collections.unmodifiableSet(listaViajes);
     }
 
+    public boolean cumpleCondiciones(Destino d){
+        return true;
+    }
     public void agregarViaje(Viaje v) {
-        if( v != null)
+        if(v != null)
             listaViajes.add(v);
+
+    }
+
+
+    public boolean estaDisponible(){
+        boolean disp=true;
+        Iterator<Viaje> Lv= listaViajes.iterator();
+        while (disp && Lv.hasNext())
+        {
+            Viaje v= Lv.next();
+            if(v.estaPendiente()||v.estaEnCurso()){
+                disp=false;
+            }
+        }
+        return disp;
     }
 
     public void quitarViaje(Viaje v) {
@@ -45,7 +62,8 @@ public abstract class Transporte implements Serializable{
             this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
-    public abstract float calcularCosto(float kilometros, int pasajeros);
+    public abstract float  calculaCostePorViaje(float kms, int ps);
+
 
     @Override
     public boolean equals(Object o) {
