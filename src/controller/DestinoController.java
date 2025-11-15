@@ -10,6 +10,6 @@ public class DestinoController {
             Destino d1 = new Destino(nombre, km);
             Agencia.getInstance().agregarDestino(d1);
         }
-
     }
+
 }
