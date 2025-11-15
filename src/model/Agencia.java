@@ -89,7 +89,7 @@ public class Agencia implements Serializable {
 
 
 
-    public Viaje crearViaje(String nombreViaje, Destino destino, Transporte t){
+    public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
         if(destino == null)
             throw new IllegalArgumentException("Destino no existente"); //Si el destinol no existe
 
@@ -100,14 +100,21 @@ public class Agencia implements Serializable {
         {
             throw new ValidacionException("El transporte " + t.getPatente() + " ya no está disponible.");
         }
+        if(!t.cumpleCondiciones(destino)){
+            throw new ValidacionException("El transporte " + t.getPatente() + " No cumple las condiciones para este destino.");
+        }
+        if (t.getCapacidadPasajeros() < cantPasajeros) {
+            throw new ValidacionException("Capacidad excedida. El transporte solo permite " + t.getCapacidadPasajeros());
+        }
 
         Viaje nuevoViaje;
 
         if(destino.esLargaDistancia()){
-            nuevoViaje = new LargaDistancia(cantViajesCreados+1,nombreViaje,destino,t);
+            nuevoViaje = new LargaDistancia(cantViajesCreados+1,nombreViaje,destino,cantPasajeros,t);
         }else {
-            nuevoViaje = new CortaDistancia(cantViajesCreados+1,nombreViaje,destino,t);
+            nuevoViaje = new CortaDistancia(cantViajesCreados+1,nombreViaje,destino,cantPasajeros,t);
         }
+        t.agregarViaje(nuevoViaje);
 
         CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
 

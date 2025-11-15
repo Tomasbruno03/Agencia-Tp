@@ -10,17 +10,16 @@ public abstract class Transporte implements Serializable{
     private boolean disponible;
     private float velocidadPromedioXhora;
 
-    public Transporte(String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora){
+    public Transporte(String patente, int capacidadPasajeros, float velocidadPromedioXhora){
         this.patente = patente;
         this.capacidadPasajeros = capacidadPasajeros;
         listaViajes = new TreeSet<>(); // Usa compareTo() de Viaje
-        this.disponible = disponible;
         this.velocidadPromedioXhora = velocidadPromedioXhora;
     }
 
     public String getPatente(){ return patente; }
     public int getCapacidadPasajeros(){ return capacidadPasajeros; }
-    public boolean estaDisponible(){ return disponible; }
+
     public float getVelocidadPromedioXhora(){ return velocidadPromedioXhora; }
 
     public Set<Viaje> getListaViajes() {
@@ -31,8 +30,23 @@ public abstract class Transporte implements Serializable{
         return true;
     }
     public void agregarViaje(Viaje v) {
-        if( v != null)
+        if(v != null)
             listaViajes.add(v);
+
+    }
+
+
+    public boolean estaDisponible(){
+        boolean disp=true;
+        Iterator<Viaje> Lv= listaViajes.iterator();
+        while (disp && Lv.hasNext())
+        {
+            Viaje v= Lv.next();
+            if(v.estaPendiente()||v.estaEnCurso()){
+                disp=false;
+            }
+        }
+        return disp;
     }
 
     public void quitarViaje(Viaje v) {

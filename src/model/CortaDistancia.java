@@ -5,8 +5,8 @@ import exceptions.ValidacionException;
 public class CortaDistancia extends Viaje{
     public float cobrobase;
 
-    public CortaDistancia(int idVia, String nom, Destino destinoViaje,Transporte t){
-        super(idVia,nom,destinoViaje,t);
+    public CortaDistancia(int idVia, String nom, Destino destinoViaje,int cantP,Transporte t){
+        super(idVia,nom,destinoViaje,cantP,t);
         this.cobrobase=1000;
     }
 

@@ -22,11 +22,11 @@ public abstract class Viaje implements Comparable <Viaje>{
 
 
     // CONSTRUCTOR
-    public Viaje(int idVia, String nom, Destino destinoViaje,Transporte t) {
+    public Viaje(int idVia, String nom, Destino destinoViaje,int cantPasajeros,Transporte t) {
         this.idViaje = idVia;
         this.nombre = nom;
         this.destinoDelViaje = destinoViaje;
-        this.cantPasajeros = 1;
+        this.cantPasajeros = cantPasajeros;
         this.estadoActual = estado.PENDIENTE; // Estado inicial
         this.avanceKmRecorridos = 0;
         this.TransporteAsignado=t;
