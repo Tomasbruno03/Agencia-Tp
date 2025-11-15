@@ -8,10 +8,16 @@ public class LargaDistancia extends Viaje{
 
     @Override
         public void iniciar() {
-        if (estadoActual != estado.PENDIENTE)
+        if (getEstado() != estado.PENDIENTE)
             throw new IllegalStateException("El viaje ya fue iniciado o finalizado.");
-        if (Responsables.isEmpty())
+        if (getResponsables().isEmpty())
             throw new IllegalStateException("Los viajes largos requieren al menos un responsable.");
-        estadoActual = estado.EN_CURSO;
+        ponerEnCurso();
     }
+
+    @Override
+    public float calcularCosto() {
+        return 0;
+    }
+
 }

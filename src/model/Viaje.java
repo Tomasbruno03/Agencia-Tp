@@ -1,6 +1,7 @@
 package model;
 
 import java.beans.DesignMode;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -22,14 +23,13 @@ public abstract class Viaje implements Comparable <Viaje>{
 
 
     // CONSTRUCTOR
-    public Viaje(int idVia, String nom, Destino destinoViaje,Transporte t) {
+    public Viaje(int idVia, String nom, Destino destinoViaje) {
         this.idViaje = idVia;
         this.nombre = nom;
         this.destinoDelViaje = destinoViaje;
         this.cantPasajeros = 1;
         this.estadoActual = estado.PENDIENTE; // Estado inicial
         this.avanceKmRecorridos = 0;
-        this.TransporteAsignado=t;
 
     }
     /*
@@ -78,11 +78,18 @@ public abstract class Viaje implements Comparable <Viaje>{
     public int hashCode() {
         return Objects.hash(idViaje);
     }
-
+    public void ponerEnCurso()
+    {
+        estadoActual=estado.EN_CURSO;
+    }
     public void iniciar() {
         if (estadoActual != estado.PENDIENTE)
             throw new IllegalStateException("El viaje ya fue iniciado o finalizado.");
-        estadoActual = estado.EN_CURSO;
+        ponerEnCurso();
+    }
+
+    public Set<ResponsableABordo> getResponsables() {
+        return Collections.unmodifiableSet(Responsables);
     }
 
     public void avanzarKm(float delta) {
