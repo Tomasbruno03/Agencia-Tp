@@ -13,6 +13,7 @@ public class Agencia implements Serializable {
     private Set<Destino> DestinosDisponibles; // catálogo
     private Map<Destino, Set<Transporte>> TreeMapaDestinos;
     private Map<Destino, Integer> CantidadDeViajesxDestino;
+    int cantViajesCreados;
 
     private static Agencia instancia; // Necesario para el patron Singleton
 
@@ -22,6 +23,7 @@ public class Agencia implements Serializable {
         this.DestinosDisponibles = new HashSet<>();
         this.TreeMapaDestinos = new HashMap<>();
         this.CantidadDeViajesxDestino = new HashMap<>();
+        cantViajesCreados=0;
     }
 
     public static Agencia getInstance() {
@@ -76,6 +78,53 @@ public class Agencia implements Serializable {
         }
     }
 
+    public Transporte buscarTransportePorPatente(String patente){
+        for(Transporte t : ListaTransporte){
+            if(t.getPatente().equalsIgnoreCase(patente)){
+                return t;
+            }
+        }
+        return null;
+    }
+
+    public Destino buscarDestinoPorNombre(String nombre){
+        for(Destino d : DestinosDisponibles){
+            if(d.getNombre().equalsIgnoreCase(nombre)){
+                return d;
+            }
+        }
+        return null;
+    }
+
+    public void asociarTransporteADestino(Destino destino, Transporte transporte){ //chequear con agregar transporte por destino?????
+        if(destino == null || transporte == null)
+            throw new IllegalArgumentException("Destiono o transporte es null.");
+
+        Set<Transporte> lista = TreeMapaDestinos.get(destino); //Obtiene el set
+
+        if(lista==null){ //Creo el set
+            lista = new HashSet<>();
+            TreeMapaDestinos.put(destino, lista);
+        }
+        lista.add(transporte); //Agregar transporte a la lista
+    }
+
+    public Viaje crearViaje(String nombreViaje, Destino destino, Transporte t){
+        if(destino == null)
+            throw new IllegalArgumentException("Destino no existente"); //VER
+
+        Viaje nuevoViaje;
+
+        if(destino.esLargaDistancia()){
+            nuevoViaje = new LargaDistancia(cantViajesCreados+1,nombreViaje,destino);
+        }else {
+            nuevoViaje = new CortaDistancia(cantViajesCreados+1,nombreViaje,destino);
+        }
+
+        CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
+
+        return  nuevoViaje;
+    }
 
 
 
