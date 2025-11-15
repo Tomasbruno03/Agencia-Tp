@@ -191,7 +191,7 @@ public abstract class Viaje implements Comparable <Viaje>{
 
     public float getPorcentajeAvance() {
         float total = getKmTotales();
-        return total <= 0 ? 0 : (avanceKmRecorridos / total) * 100f;
+        return total <= 0 ? 0 : (avanceKmRecorridos / total) * 100;
     }
 
 
