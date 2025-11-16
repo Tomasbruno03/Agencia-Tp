@@ -9,7 +9,6 @@ public class ResponsableController {
 
         Agencia agencia = Agencia.getInstance();
 
-        // Validaciones básicas
         if (dni == null || dni.isEmpty()) {
             throw new ValidacionException("El DNI no puede estar vacío.");
         }
@@ -20,15 +19,8 @@ public class ResponsableController {
             throw new ValidacionException("El sueldo por viaje debe ser positivo.");
         }
 
-        // Es necesario validar acá cuando ya se validó en agencia si es duplicado??
-        if (agencia.buscarResponsablePorDni(dni) != null) {
-            throw new ValidacionException("Ya existe un responsable con DNI " + dni);
-        }
+        ResponsableABordo nuevo = new ResponsableABordo(nombre, true, dni, sueldoPorViaje); // si es duplicado, acá saltará la excepción
 
-        // Crear responsable
-        ResponsableABordo nuevo = new ResponsableABordo(nombre, true, dni, sueldoPorViaje);
-
-        // Guardarlo en Agencia
         agencia.agregarResponsable(nuevo);
 
         return nuevo;
