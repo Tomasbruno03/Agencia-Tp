@@ -6,14 +6,13 @@ public class Auto extends Transporte {
     private float ValorBasePorViaje;
     private float ValorPorKmRecorrido;
 
-public Auto (String patente, int capacidadPasajeros, boolean disponible, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
-    super(patente, 4, disponible, velocidadPromedioXhora);
+public Auto (String patente, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
+    super(patente,  4, velocidadPromedioXhora);
     this.ValorBasePorViaje = _ValorBasePorViaje;
     this.ValorPorKmRecorrido = _ValorPorKmRecorrido;
 } //Constructor tengo que cambiar el nombre de las variables como en c?
 
-public float  getValorBasePorViaje(){return ValorBasePorViaje;
-}
+public float  getValorBasePorViaje(){ return ValorBasePorViaje; }
 
 public void setValorBasePorViaje(float ValorBasePorViaje){
     if(ValorBasePorViaje>0){
@@ -31,13 +30,17 @@ public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
     }
 
     @Override
-    public String toString() {
-    return "Auto [Valor Base Por viaje:" + ValorBasePorViaje + ",Valor por km recorrido: " + ValorPorKmRecorrido + " ]";
-    }
-    @Override
     public float calcularCosto(float kilometros,int pasajeros){
         return this.ValorBasePorViaje + (this.ValorPorKmRecorrido * kilometros);
     }
 
+    @Override
+    public String toString() {
+    return "Auto [Valor Base Por viaje:" + ValorBasePorViaje + ",Valor por km recorrido: " + ValorPorKmRecorrido + " ]";
+    }
 
+    @Override
+    public boolean cumpleCondiciones(Destino d){
+        return !(d.esLargaDistancia());
+    }
 }

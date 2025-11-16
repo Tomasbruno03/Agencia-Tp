@@ -1,19 +1,16 @@
 package model;
 
-public class CortaDistancia extends Viaje{
-    public float cobrobase;
+import exceptions.ValidacionException;
 
-    public CortaDistancia(int idVia, String nom, Destino destinoViaje,float cobrobase,Transporte t){
-        super(idVia,nom,destinoViaje,t);
-        this.cobrobase=cobrobase;
+public class CortaDistancia extends Viaje{
+    private static final float cobrobase = 1500; // Valor inicial por defecto
+
+    public CortaDistancia(int idVia, String nom, Destino destinoViaje,int cantP,Transporte t){
+        super(idVia,nom,destinoViaje,cantP,t);
     }
 
     public float getCobrobase(){
         return cobrobase;
-    }
-
-    public void setCobrobase(float cobrobase){
-        this.cobrobase=cobrobase;
     }
 
     @Override
@@ -22,7 +19,7 @@ public class CortaDistancia extends Viaje{
     }
 
     @Override
-    public float calcularCosto() {
-        return 0;
+    public float calcularCostoBase() {
+        return cobrobase;
     }
 }

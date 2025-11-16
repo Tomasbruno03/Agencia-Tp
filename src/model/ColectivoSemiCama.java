@@ -5,9 +5,9 @@ import java.util.Objects;
 public class ColectivoSemiCama extends Transporte{
 private float valorPorPasajerosPorKmRecorrido;
 
-    public ColectivoSemiCama (String patente, boolean disponible, float velocidadPromedioXhora, float valorPorPasajerosPorKmRecorrido) {
+    public ColectivoSemiCama (String patente, float velocidadPromedioXhora, float valorPorPasajerosPorKmRecorrido) {
 
-        super(patente, 40, disponible, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?
+        super(patente, 40, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?
         this.valorPorPasajerosPorKmRecorrido = valorPorPasajerosPorKmRecorrido;
     }
 
@@ -19,7 +19,12 @@ public void setvalorPorPasajerosPorKmRecorrido(float valorPorPasajerosPorKmRecor
         this.valorPorPasajerosPorKmRecorrido=valorPorPasajerosPorKmRecorrido;
 }
 
-@Override
+    @Override
+    public float calculaCostoPorViaje(float kms, int ps) {
+        return valorPorPasajerosPorKmRecorrido * ps * kms;
+    }
+
+    @Override
     public String toString(){
     return "ColectivoSemiCama [Valor Por Pasajeros Por Km Recorrido:" + valorPorPasajerosPorKmRecorrido + " ]";
 }

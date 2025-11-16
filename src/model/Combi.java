@@ -7,9 +7,8 @@ public class Combi extends Transporte {
     private float valorBasePorViaje;
     private float valorPorPasajeroPorKmRecorrido;
 
-    public Combi(String patente, boolean disponible, float velocidadPromedioXhora, float valorBasePorViaje, float valorPorPasajeroPorKmRecorrido) {
-
-        super(patente, 16, disponible, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?
+    public Combi(String patente, float velocidadPromedioXhora, float valorBasePorViaje, float valorPorPasajeroPorKmRecorrido) {
+        super(patente, 16, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?
         this.valorBasePorViaje = valorBasePorViaje;
         this.valorPorPasajeroPorKmRecorrido = valorPorPasajeroPorKmRecorrido;
     } //Tengo que cambiar los nombres como en c??
@@ -19,21 +18,24 @@ public class Combi extends Transporte {
     }
 
     public void setValorBasePorViaje(float valorBasePorViaje) {
-        if (valorBasePorViaje>0){
-        this.valorBasePorViaje = valorBasePorViaje;
-    }    }
+        if (valorBasePorViaje>0)
+            this.valorBasePorViaje = valorBasePorViaje;
+    }
 
     public float getValorPorPasajeroPorKmRecorrido() {
         return valorPorPasajeroPorKmRecorrido;
     }
 
     public void setValorPorPasajeroPorKmRecorrido(float valorPorPasajeroPorKmRecorrido) {
-        if(valorPorPasajeroPorKmRecorrido>0){
-        this.valorPorPasajeroPorKmRecorrido = valorPorPasajeroPorKmRecorrido;
-    }    }
+        if(valorPorPasajeroPorKmRecorrido>0)
+            this.valorPorPasajeroPorKmRecorrido = valorPorPasajeroPorKmRecorrido;
+    }
 
-    @Override //FALTA
-    public float CalcularCosto();
+
+    @Override
+    public float calculaCostoPorViaje(float kms, int ps) {
+        return valorBasePorViaje + (valorPorPasajeroPorKmRecorrido * ps * kms);
+    }
 
     @Override
     public String toString() {

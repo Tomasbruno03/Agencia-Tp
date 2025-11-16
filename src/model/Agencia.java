@@ -11,8 +11,8 @@ public class Agencia implements Serializable {
     private Set<Transporte> ListaTransporte;
     private Set<ResponsableABordo> SetResponsables;
     private Set<Destino> DestinosDisponibles; // catálogo
-    private Map<Destino, Set<Transporte>> TreeMapaDestinos;
     private Map<Destino, Integer> CantidadDeViajesxDestino;
+    int cantViajesCreados;
 
     private static Agencia instancia; // Necesario para el patron Singleton
 
@@ -20,8 +20,8 @@ public class Agencia implements Serializable {
         this.ListaTransporte = new HashSet<>();
         this.SetResponsables = new HashSet<>();
         this.DestinosDisponibles = new HashSet<>();
-        this.TreeMapaDestinos = new HashMap<>();
         this.CantidadDeViajesxDestino = new HashMap<>();
+        cantViajesCreados=0;
     }
 
     public static Agencia getInstance() {
@@ -52,8 +52,15 @@ public class Agencia implements Serializable {
         DestinosDisponibles.add(d);
     }
 
-    public Set<Transporte> transportesPorDestino(Destino destino) {
-        return TreeMapaDestinos.getOrDefault(destino, Collections.emptySet());
+    public Set<Transporte> transportesPorDestino(Destino d) {
+        Set<Transporte> ListaDisponibles= new HashSet<Transporte>();
+
+        for (Transporte t : this.ListaTransporte){
+            if(t.estaDisponible() && t.cumpleCondiciones(d)){
+                ListaDisponibles.add(t);
+            }
+        }
+        return ListaDisponibles;
     }
 
 
@@ -61,19 +68,14 @@ public class Agencia implements Serializable {
         ListaTransporte.add(t);
     }
 
-    public void agregarTransportePorDestino(Transporte t) {
-        for (Viaje viaje : t.getListaViajes()) {
-            Destino destino = viaje.getDestinoDelViaje();
-            Set<Transporte> L = transportesPorDestino(destino);
 
-            if (L == null) {
-                L = new HashSet<>();
-                L.add(t);
-                TreeMapaDestinos.put(destino, L);
-            } else {
-                L.add(t);
+    public Transporte buscarTransportePorPatente(String patente){
+        for(Transporte t : ListaTransporte){
+            if(t.getPatente().equalsIgnoreCase(patente)){
+                return t;
             }
         }
+        return null;
     }
     /**
      * Recibe un Responsable (creado por LectorJSON) y lo añade
@@ -86,6 +88,48 @@ public class Agencia implements Serializable {
         }
     }
 
+    public Destino buscarDestinoPorNombre(String nombre){
+        for(Destino d : DestinosDisponibles){
+            if(d.getNombre().equalsIgnoreCase(nombre)){
+                return d;
+            }
+        }
+        return null;
+    }
+
+
+
+    public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
+        if(destino == null)
+            throw new IllegalArgumentException("Destino no existente"); //Si el destinol no existe
+
+        if(t==null)
+            throw new IllegalArgumentException("Transporte no puede ser nulo"); //Si el transporte Cargado es nulo
+
+        if(!t.estaDisponible())
+        {
+            throw new ValidacionException("El transporte " + t.getPatente() + " ya no está disponible.");
+        }
+        if(!t.cumpleCondiciones(destino)){
+            throw new ValidacionException("El transporte " + t.getPatente() + " No cumple las condiciones para este destino.");
+        }
+        if (t.getCapacidadPasajeros() < cantPasajeros) {
+            throw new ValidacionException("Capacidad excedida. El transporte solo permite " + t.getCapacidadPasajeros());
+        }
+
+        Viaje nuevoViaje;
+
+        if(destino.esLargaDistancia()){
+            nuevoViaje = new LargaDistancia(cantViajesCreados+1,nombreViaje,destino,cantPasajeros,t);
+        }else {
+            nuevoViaje = new CortaDistancia(cantViajesCreados+1,nombreViaje,destino,cantPasajeros,t);
+        }
+        t.agregarViaje(nuevoViaje);
+
+        CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
+
+        return  nuevoViaje;
+    }
 
 
 

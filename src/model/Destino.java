@@ -1,4 +1,6 @@
 package model;
+import exceptions.ValidacionException;
+
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Objects;
@@ -8,9 +10,18 @@ public class Destino implements Comparable <Destino>{
     private String Nombre;
     private float CantKm;
 
-    public Destino(String Nom, float Ckm){
-        Nombre=Nom;
-        CantKm=Ckm;
+    public Destino(String Nom, float Ckm) throws ValidacionException {
+        //Valida datos
+        if (Ckm <= 0) {
+            throw new ValidacionException("Los kilómetros deben ser un valor positivo.");
+        }
+        if (Nom == null || Nom.trim().isEmpty()) {
+            throw new ValidacionException("El nombre no puede estar vacío.");
+        }
+
+        // Si pasa, se crea el objeto
+        this.Nombre = Nom;
+        this.CantKm = Ckm;
     }
     public Destino(){}
 
@@ -40,5 +51,14 @@ public class Destino implements Comparable <Destino>{
             return false;
         Destino that  = (Destino) o; //casteo necesario para usar una variable de tipo clase
         return Objects.equals(this.Nombre,that.getNombre());
+    }
+
+    public boolean esLargaDistancia(){
+        return this.CantKm>100;
+    }
+
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.Nombre);
     }
 }

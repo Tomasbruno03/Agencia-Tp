@@ -7,17 +7,19 @@ public class ResponsableABordo implements Comparable<ResponsableABordo> {
     private Boolean EstaDisp; //S o N
     private String Dni;
     private float SueldoXViaje;
+    private float CantKmAcumulados;
 
     public ResponsableABordo(String nombre, Boolean EstaDisp, String Dni, float SueldoXViaje){
         this.nombre = nombre;
         this.EstaDisp = EstaDisp;
         this.Dni = Dni;
         this.SueldoXViaje = SueldoXViaje;
+        CantKmAcumulados=0;
     }
     public String GetNombre(){
         return nombre;
     }
-    public Boolean EstaDisp(){
+    public Boolean GetEstaDisp(){
         return EstaDisp;
     }
     public String GetDni(){
@@ -26,10 +28,21 @@ public class ResponsableABordo implements Comparable<ResponsableABordo> {
     public float GetSueldo(){
         return SueldoXViaje;
     }
+    public float getCantKmAcumulados(){return CantKmAcumulados;}
 
-    public void setEstaDisp(Boolean estaDisp) { //unico set que podriamos llegar a necesitar, dar de baja o no el responsable
-        EstaDisp = estaDisp;
+
+    public void AcumularKmRecorridos(float km)
+    {
+        CantKmAcumulados+=km;
     }
+
+    public void Ocupar() { //unico set que podriamos llegar a necesitar, dar de baja o no el responsable
+        EstaDisp = false;
+    }
+    public void Liberar(){
+        EstaDisp=true;
+    }
+
     @Override
     public int compareTo(ResponsableABordo otro){
         return this.Dni.compareTo(otro.GetDni()); //devuelve 0 si son iguales,-1 o 1
