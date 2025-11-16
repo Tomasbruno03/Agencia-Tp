@@ -98,7 +98,12 @@ public class Agencia implements Serializable {
     }
 
 
-
+    public List<ResponsableABordo> GenerarRankingResponsables()
+    {
+        List<ResponsableABordo> r= new ArrayList<>(this.getResponsables());
+        Collections.sort(r);
+        return r;
+    }
     public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
         if(destino == null)
             throw new IllegalArgumentException("Destino no existente"); //Si el destinol no existe
@@ -125,6 +130,7 @@ public class Agencia implements Serializable {
             nuevoViaje = new CortaDistancia(cantViajesCreados+1,nombreViaje,destino,cantPasajeros,t);
         }
         t.agregarViaje(nuevoViaje);
+
 
         CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
 
