@@ -15,7 +15,7 @@ public class CortaDistancia extends Viaje{
 
     @Override
     public String toString(){
-        return "CortaDistancia [Cobro base en viajes de corta distancia:" + cobrobase + " ]";
+        return "CortaDistancia { Viaje = " + super.toString() + " [Cobro base en viajes de corta distancia:" + cobrobase + " ]} ";
     }
 
     @Override

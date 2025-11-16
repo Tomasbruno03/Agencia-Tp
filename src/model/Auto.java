@@ -35,7 +35,7 @@ public class Auto extends Transporte {
 
     @Override
     public String toString() {
-    return "Auto [Valor Base Por viaje:" + ValorBasePorViaje + ",Valor por km recorrido: " + ValorPorKmRecorrido + " ]";
+    return "Auto { Transporte= " + super.toString() + "[Valor Base Por viaje:" + ValorBasePorViaje + ",Valor por km recorrido: " + ValorPorKmRecorrido + " ]}";
     }
 
     @Override

@@ -26,6 +26,6 @@ public class ColectivoSemiCama extends Transporte{
 
     @Override
     public String toString(){
-    return "ColectivoSemiCama [Valor Por Pasajeros Por Km Recorrido:" + valorPorPasajerosPorKmRecorrido + " ]";
+    return "ColectivoSemiCama { Transporte =" + super.toString() + " [Valor Por Pasajeros Por Km Recorrido:" + valorPorPasajerosPorKmRecorrido + " ]}";
     }
 }

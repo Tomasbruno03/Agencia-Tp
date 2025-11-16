@@ -49,7 +49,7 @@ private float ValorPlazaTipoCamaPorKmRecorrido;
 
     @Override
     public String toString(){
-        return "ColectivoCocheCama [Cantidad de pasajes Semi Cama:" + CantSemiCama + ",Cantidad de pasajes Cama: " + CantCama + "Valor por pasajero por km recorrido:" + ValorPorPasajeroPorKmRecorrido + ",Valor por plaza tipo cama por km recorrido: " + ValorPlazaTipoCamaPorKmRecorrido +" ]";
+        return "ColectivoCocheCama { Transporte = " + super.toString() + "[Cantidad de pasajes Semi Cama:" + CantSemiCama + ",Cantidad de pasajes Cama: " + CantCama + "Valor por pasajero por km recorrido:" + ValorPorPasajeroPorKmRecorrido + ",Valor por plaza tipo cama por km recorrido: " + ValorPlazaTipoCamaPorKmRecorrido +" ]}";
     }
 
 }

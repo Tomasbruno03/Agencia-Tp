@@ -39,7 +39,7 @@ public class Combi extends Transporte {
 
     @Override
     public String toString() {
-        return "Combi [Valor Base Por viaje:" + valorBasePorViaje + ",Valor por pasajero por km recorrido: " + valorPorPasajeroPorKmRecorrido + " ]";
+        return "Combi { Transporte = " + super.toString() + "[Valor Base Por viaje:" + valorBasePorViaje + ",Valor por pasajero por km recorrido: " + valorPorPasajeroPorKmRecorrido + " ]}";
     }
 
 }
