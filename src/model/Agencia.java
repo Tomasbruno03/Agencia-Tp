@@ -45,6 +45,10 @@ public class Agencia implements Serializable {
         return Collections.unmodifiableSet(SetResponsables);
     }
 
+    public int obtenerProximoNumeroDeViaje(Destino d) {
+        return CantidadDeViajesxDestino.getOrDefault(d, 0) + 1;
+    }
+
     public void agregarDestino(Destino d) {
         if (DestinosDisponibles.contains(d)) {
             throw new DestinoYaExisteException(d.getNombre());
