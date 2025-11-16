@@ -52,7 +52,7 @@ public class Agencia implements Serializable {
         DestinosDisponibles.add(d);
     }
 
-    public Set<Transporte> transportesPorDestino(Destino d) {
+    public Set<Transporte> transportesParaDestino(Destino d) {
         Set<Transporte> ListaDisponibles= new HashSet<Transporte>();
 
         for (Transporte t : this.ListaTransporte){
@@ -126,6 +126,8 @@ public class Agencia implements Serializable {
         Collections.sort(r);
         return r;
     }
+
+
     public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
         if(destino == null)
             throw new IllegalArgumentException("Destino no existente"); //Si el destinol no existe
@@ -174,6 +176,26 @@ public class Agencia implements Serializable {
                 }
             }
         }
+        return recaudacion;
+    }
+    public Map<Transporte,Float> GenerarReporteRecaudadoPorTransporte()
+    {
+        Map<Transporte,Float>recaudacion = new HashMap<>();;
+
+        for(Transporte t: ListaTransporte)
+        {
+
+            for(Viaje v: t.getListaViajes())
+            {
+                if(v.estaFinalizado())
+                {
+                    float recaudadoxT=v.calcularCostoFinal();
+                    recaudacion.put(t, recaudacion.getOrDefault(t, 0f) + recaudadoxT);
+                }
+
+            }
+        }
+
         return recaudacion;
     }
 
