@@ -3,6 +3,7 @@ package controller;
 import model.Agencia;
 import model.Destino;
 import model.ResponsableABordo;
+import model.Transporte;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -36,16 +37,14 @@ public class AgenciaController {
 
         String contenidoDelRanking = getRankingResponsablesComoTexto();
 
-        // 2. Escribe el contenido en el archivo (Forma moderna de Java)
         try {
             Files.writeString(Paths.get(filePath), contenidoDelRanking);
         } catch (IOException e) {
-            // 3. Si falla, le informa a la Vista (UI)
-            throw new IOException("Error al guardar el archivo: " + e.getMessage());
+            throw new IOException("Error al guardar el archivo de ranking: " + e.getMessage());
         }
     }
 
-    public String getReporteRecaudacionComoTexto() {
+    public String getReporteRecaudacionDestinoComoTexto() {
 
         Map<Destino, Float> reporteDatos = agencia.getReporteRecaudacionPorDestino();
 
@@ -67,13 +66,58 @@ public class AgenciaController {
                 montoTotalRecaudado += recaudado;
             }
         }
-
-
         sb.append("--------------------------------------\n");
         sb.append(String.format("MONTO TOTAL RECAUDADO: $%.2f\n", montoTotalRecaudado));
 
         return sb.toString();
     }
+    public void exportarReporteRecaudacionDestino(String filePath) throws IOException {
+        // Reutiliza el método anterior
+        String contenido = getReporteRecaudacionDestinoComoTexto();
+
+        try {
+            Files.writeString(Paths.get(filePath), contenido);
+        } catch (IOException e) {
+            throw new IOException("Error al guardar el reporte de destinos: " + e.getMessage());
+        }
+    }
+
+    // --- 3. REPORTE DE RECAUDACIÓN POR TRANSPORTE (El que faltaba) ---
+
+    /**
+     * Obtiene la recaudación por transporte como String (para pantalla).
+     */
+    public String getReporteRecaudacionTransporteComoTexto() {
+        Map<Transporte, Float> reporteDatos = agencia.GenerarReporteRecaudadoPorTransporte(); // Llama al Modelo
+        StringBuilder sb = new StringBuilder("--- Recaudación Total por Transporte ---\n");
+        float montoTotalRecaudado = 0f;
+
+        if (reporteDatos.isEmpty()) {
+            sb.append("No hay viajes finalizados para generar un reporte.\n");
+        } else {
+            for (Map.Entry<Transporte, Float> entry : reporteDatos.entrySet()) {
+                Transporte t = entry.getKey();
+                Float recaudado = entry.getValue();
+                sb.append(String.format("- Transporte (Patente): %s --- Total: $%.2f\n", t.getPatente(), recaudado));
+                montoTotalRecaudado += recaudado;
+            }
+        }
+        sb.append("--------------------------------------\n");
+        sb.append(String.format("MONTO TOTAL RECAUDADO: $%.2f\n", montoTotalRecaudado));
+        return sb.toString();
+    }
+
+    public void exportarReporteRecaudacionTransporte(String filePath) throws IOException {
+
+        String contenido = getReporteRecaudacionTransporteComoTexto();
+
+        try {
+            Files.writeString(Paths.get(filePath), contenido);
+        } catch (IOException e) {
+            throw new IOException("Error al guardar el reporte de transportes: " + e.getMessage());
+        }
+    }
 }
+
 
 
