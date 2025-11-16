@@ -193,7 +193,10 @@ public abstract class Viaje implements Comparable <Viaje>{
         float total = getKmTotales();
         return total <= 0 ? 0 : (avanceKmRecorridos / total) * 100f;
     }
-
+    @Override
+    public String toString() {
+        return getClass().getSimpleName() + " { " + "id=" + idViaje + ", nombre='" + nombre + ", destino=" + destinoDelViaje.getNombre() + ", Cantidad de pasajeros=" + cantPasajeros + ", estado=" + estadoActual + ", Kilometros avanzados=" + avanceKmRecorridos + ", transporte asignado =" + TransporteAsignado.getPatente() + " }";
+    }
 
 
 }

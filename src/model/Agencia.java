@@ -6,16 +6,51 @@ import java.io.Serializable;
 import java.util.*;
 import java.util.Set.*;
 
+/**
+* Representa la agencia de turismo que administra destinos, transporte, responsable a bordo y viaje
+ *Implementa el patron Singleton
+*
+*La agencia es responsable de:
+* <ul>
+ *      <li>Registrar destinos.</li>
+ *      <li>Registrar transportes disponibles.</li>
+ *      <li>Registrar responsables a bordo.</li>
+ *      <li>Crear viajes verificando todas las restricciones correspondientes.</li>
+ *      <li>Generar reportes de recaudación y ranking de responsables.</li>
+ * </ul>
+ */
 public class Agencia implements Serializable {
 
+    /**
+     *  Conjunto de transportes registrados en la agencia
+     */
     private Set<Transporte> ListaTransporte;
+    /**
+     * Conjunto de responsables a bordo registrados.
+     */
     private Set<ResponsableABordo> SetResponsables;
+    /**
+     * Conjunto de destinos habilitados por la agencia.
+     */
     private Set<Destino> DestinosDisponibles; // catálogo
+    /**
+     * Mapa que relaciona cada destino con la cantidad de viajes creados hacia él.
+     */
     private Map<Destino, Integer> CantidadDeViajesxDestino;
+    /**
+     * Contador interno de viajes creados, para asignar IDs únicos.
+     */
     int cantViajesCreados;
+
+    /**
+     * Instancia única para implementar el patrón Singleton.
+     */
 
     private static Agencia instancia; // Necesario para el patron Singleton
 
+    /**
+     * Constructor privado. Inicializa las colecciones principales.
+     */
     private Agencia() {
         this.ListaTransporte = new HashSet<>();
         this.SetResponsables = new HashSet<>();
