@@ -62,4 +62,34 @@ public class ViajeController {
         }
     }
 
+    public void asignarResponsableAViaje(int idViaje, String dniResponsable) {
+
+        Viaje v = obtenerViaje(idViaje);
+
+        ResponsableABordo r = agencia.buscarResponsablePorDni(dniResponsable);
+        if (r == null)
+            throw new ValidacionException("No existe responsable con DNI " + dniResponsable);
+
+        if (!r.GetEstaDisp())
+            throw new ValidacionException("El responsable no está disponible.");
+
+        v.AgregarResponsable(r);
+        r.Ocupar();
+    }
+
+    public void quitarResponsableDeViaje(int idViaje, String dniResponsable) {
+
+        Viaje v = obtenerViaje(idViaje);
+
+        ResponsableABordo r = agencia.buscarResponsablePorDni(dniResponsable);
+        if (r == null)
+            throw new ValidacionException("No existe responsable con DNI " + dniResponsable);
+
+        if (!v.getResponsables().contains(r))
+            throw new ValidacionException("El responsable no está asignado a este viaje.");
+
+        v.QuitarResponsable(r);
+        r.Liberar();
+    }
+
 }
