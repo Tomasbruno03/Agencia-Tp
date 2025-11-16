@@ -56,6 +56,13 @@ public class Agencia implements Serializable {
         DestinosDisponibles.add(d);
     }
 
+    public void agregarResponsable(ResponsableABordo r) {
+        if (SetResponsables.contains(r)) {
+            throw new IllegalArgumentException("Ya existe un responsable con DNI " + r.GetDni());
+        }
+        SetResponsables.add(r);
+    }
+
     public Set<Transporte> transportesPorDestino(Destino d) {
         Set<Transporte> ListaDisponibles= new HashSet<Transporte>();
 
@@ -102,6 +109,15 @@ public class Agencia implements Serializable {
         return null;
     }
 
+    public ResponsableABordo buscarResponsablePorDni(String dni) {
+        for (ResponsableABordo r : SetResponsables) {
+            if (r.GetDni().equalsIgnoreCase(dni)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
     public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
         if(destino == null)
             throw new IllegalArgumentException("Destino no existente"); //Si el destinol no existe
@@ -133,10 +149,5 @@ public class Agencia implements Serializable {
 
         return  nuevoViaje;
     }
-
-
-
-
-
 }
 
