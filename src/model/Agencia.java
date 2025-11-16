@@ -137,6 +137,24 @@ public class Agencia implements Serializable {
         return  nuevoViaje;
     }
 
+    public Map<Destino, Float> getReporteRecaudacionPorDestino() {
+
+
+        Map<Destino, Float> recaudacion = new HashMap<>();
+
+        for (Transporte t : this.ListaTransporte) {
+
+            for (Viaje v : t.getListaViajes()) {
+                if (v.estaFinalizado()) {
+                    Destino d = v.getDestinoDelViaje();
+                    float costo = v.calcularCostoFinal(); // (Asegurate de corregir esto)
+                    recaudacion.put(d, recaudacion.getOrDefault(d, 0f) + costo);
+                }
+            }
+        }
+        return recaudacion;
+    }
+
 
 
 
