@@ -34,4 +34,10 @@ public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
     public String toString() {
     return "Auto [Valor Base Por viaje:" + ValorBasePorViaje + ",Valor por km recorrido: " + ValorPorKmRecorrido + " ]";
     }
+    @Override
+    public float calcularCosto(float kilometros,int pasajeros){
+        return this.ValorBasePorViaje + (this.ValorPorKmRecorrido * kilometros);
+    }
+
+
 }

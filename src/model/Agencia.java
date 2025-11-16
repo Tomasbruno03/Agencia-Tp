@@ -75,6 +75,16 @@ public class Agencia implements Serializable {
             }
         }
     }
+    /**
+     * Recibe un Responsable (creado por LectorJSON) y lo añade
+     * al Set de responsables de la agencia.
+     */
+    public void agregarResponsable(ResponsableABordo r) {
+        if (r != null) {
+            // Añade al atributo 'SetResponsables' que definiste arriba
+            this.SetResponsables.add(r);
+        }
+    }
 
 
 

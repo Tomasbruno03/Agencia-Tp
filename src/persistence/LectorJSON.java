@@ -2,7 +2,7 @@ package persistence;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 //esta clase se podria decir que es un gestor de persistencia ya que sabe escribir como leer
-import controller.Agencia; //falta agencia que segun el diagrama vive en controller
+import model.Agencia;
 import  model.Transporte;
 import model.Destino;
 import model.ResponsableABordo;
