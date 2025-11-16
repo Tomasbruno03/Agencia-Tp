@@ -98,7 +98,7 @@ public class MainWindow extends JFrame {
         JMenuItem recaudacionDestino = new JMenuItem("Recaudación por destino");
         JMenuItem rankingResponsables = new JMenuItem("Ranking de responsables");
 
-        // Mostrar y exportar recaudación transporte
+        // Mostrar y exportar recaudación de transporte
         recaudacionTransporte.addActionListener(e -> {
             try {
                 mostrarYExportarReporte(

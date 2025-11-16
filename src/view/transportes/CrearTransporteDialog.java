@@ -81,7 +81,7 @@ public class CrearTransporteDialog extends JDialog {
                         break;
                 }
 
-                Agencia.getInstance().Agregar_TransporteALista(nuevo);
+                Agencia.getInstance().agregarTransporte(nuevo);
                 JOptionPane.showMessageDialog(this, "Transporte creado exitosamente.");
                 parent.cargarTransportes();
                 dispose();
