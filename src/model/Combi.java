@@ -41,4 +41,5 @@ public class Combi extends Transporte {
     public String toString() {
         return "Combi [Valor Base Por viaje:" + valorBasePorViaje + ",Valor por pasajero por km recorrido: " + valorPorPasajeroPorKmRecorrido + " ]";
     }
+
 }
