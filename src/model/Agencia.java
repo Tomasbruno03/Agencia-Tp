@@ -68,6 +68,9 @@ public class Agencia implements Serializable {
         ListaTransporte.add(t);
     }
 
+    public int obtenerProximoNumeroDeViaje(Destino d) {
+        return CantidadDeViajesxDestino.getOrDefault(d, 0) + 1;
+    }
 
     public Transporte buscarTransportePorPatente(String patente){
         for(Transporte t : ListaTransporte){
