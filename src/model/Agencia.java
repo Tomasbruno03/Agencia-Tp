@@ -45,22 +45,11 @@ public class Agencia implements Serializable {
         return Collections.unmodifiableSet(SetResponsables);
     }
 
-    public int obtenerProximoNumeroDeViaje(Destino d) {
-        return CantidadDeViajesxDestino.getOrDefault(d, 0) + 1;
-    }
-
     public void agregarDestino(Destino d) {
         if (DestinosDisponibles.contains(d)) {
             throw new DestinoYaExisteException(d.getNombre());
         }
         DestinosDisponibles.add(d);
-    }
-
-    public void agregarResponsable(ResponsableABordo r) {
-        if (SetResponsables.contains(r)) {
-            throw new IllegalArgumentException("Ya existe un responsable con DNI " + r.GetDni());
-        }
-        SetResponsables.add(r);
     }
 
     public Set<Transporte> transportesPorDestino(Destino d) {
@@ -128,6 +117,12 @@ public class Agencia implements Serializable {
         return null;
     }
 
+    public List<ResponsableABordo> GenerarRankingResponsables()
+    {
+        List<ResponsableABordo> r= new ArrayList<>(this.getResponsables());
+        Collections.sort(r);
+        return r;
+    }
     public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
         if(destino == null)
             throw new IllegalArgumentException("Destino no existente"); //Si el destinol no existe
@@ -155,9 +150,15 @@ public class Agencia implements Serializable {
         }
         t.agregarViaje(nuevoViaje);
 
+
         CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
 
         return  nuevoViaje;
     }
+
+
+
+
+
 }
 
