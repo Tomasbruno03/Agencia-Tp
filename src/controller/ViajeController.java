@@ -5,9 +5,9 @@ import model.*;
 
 public class ViajeController {
 
-    public Viaje crearViaje(String nombreDestino, String patente, int cantPasajeros) {
+    Agencia agencia = Agencia.getInstance();
 
-        Agencia agencia = Agencia.getInstance();
+    public Viaje crearViaje(String nombreDestino, String patente, int cantPasajeros) {
 
         Destino d = agencia.buscarDestinoPorNombre(nombreDestino);
         if (d == null) {
@@ -24,4 +24,42 @@ public class ViajeController {
 
         return agencia.crearViaje(nombreViaje, d, cantPasajeros, t);
     }
+
+    private Viaje obtenerViaje(int idViaje) {
+        Viaje v = agencia.buscarViajePorId(idViaje);
+        if (v == null)
+            throw new ValidacionException("No existe viaje con ID: " + idViaje);
+        return v;
+    }
+
+    public void iniciarViaje(int idViaje) {
+        Viaje v = obtenerViaje(idViaje);
+
+        try {
+            v.iniciar();
+        } catch (IllegalStateException e) {
+            throw new ValidacionException("No se pudo iniciar el viaje: " + e.getMessage());
+        }
+    }
+
+    public void avanzarViaje(int idViaje, float km) {
+        Viaje v = obtenerViaje(idViaje);
+
+        try {
+            v.avanzarKm(km);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            throw new ValidacionException("No se pudo avanzar el viaje: " + e.getMessage());
+        }
+    }
+
+    public void finalizarViaje(int idViaje) {
+        Viaje v = obtenerViaje(idViaje);
+
+        try {
+            v.finalizar();
+        } catch (IllegalStateException e) {
+            throw new ValidacionException("No se pudo finalizar el viaje: " + e.getMessage());
+        }
+    }
+
 }
