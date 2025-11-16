@@ -6,8 +6,8 @@ public class Auto extends Transporte {
     private float ValorBasePorViaje;
     private float ValorPorKmRecorrido;
 
-public Auto (String patente, int capacidadPasajeros, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
-    super(patente, 4, velocidadPromedioXhora);
+public Auto (String patente, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
+    super(patente,  4, velocidadPromedioXhora);
     this.ValorBasePorViaje = _ValorBasePorViaje;
     this.ValorPorKmRecorrido = _ValorPorKmRecorrido;
 } //Constructor tengo que cambiar el nombre de las variables como en c?
@@ -30,8 +30,8 @@ public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
     }
 
     @Override
-    public float calculaCostoPorViaje(float kms, int ps) {
-        return ValorBasePorViaje + (ValorPorKmRecorrido * kms);
+    public float calcularCosto(float kilometros,int pasajeros){
+        return this.ValorBasePorViaje + (this.ValorPorKmRecorrido * kilometros);
     }
 
     @Override
