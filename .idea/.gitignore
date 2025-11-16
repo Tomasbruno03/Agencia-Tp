@@ -1,3 +1,25 @@
-# Default ignored files
+# --- Archivos de IntelliJ IDEA (Configuración del IDE) ---
+.idea/
+*.iml
+*.ipr
+*.iws
 /shelf/
 /workspace.xml
+
+# --- Carpeta de salida (Compilados) ---
+/out/
+
+# --- Archivos compilados de Java ---
+*.class
+
+# --- Archivos de Build (Maven/Gradle - por si acaso) ---
+/target/
+/build/
+.gradle/
+
+# --- Archivos del Sistema Operativo ---
+.DS_Store
+Thumbs.db
+
+# --- Registros (Logs) ---
+*.log
