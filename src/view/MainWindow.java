@@ -12,6 +12,7 @@ import view.viajes.GestionEstadoViajeView;
 import view.transportes.TransporteView;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -33,11 +34,71 @@ public class MainWindow extends JFrame {
         consultasViajesController = new ViajeConsultaController();
 
         setTitle("Agencia de Turismo");
-        setSize(800, 600);
+        setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        // Cambiar icono de la aplicación
+        ImageIcon icono = new ImageIcon("resources/icono_agencia.png");
+        setIconImage(icono.getImage());
+
+        // Barra de menú
         setJMenuBar(crearMenu());
+
+        // Panel principal minimalista con botones
+        initPanelCentral();
+    }
+
+    private void initPanelCentral() {
+        JPanel panel = new JPanel();
+        panel.setBackground(new Color(245, 245, 245)); // fondo gris claro
+        panel.setLayout(new BorderLayout());
+
+        // Mensaje de bienvenida
+        JLabel lblBienvenida = new JLabel(
+                "<html><h1>Bienvenido a Agencia de Turismo</h1>" +
+                        "<p>Use los botones o el menú para gestionar la agencia</p></html>",
+                SwingConstants.CENTER);
+        panel.add(lblBienvenida, BorderLayout.NORTH);
+
+        // Panel con botones principales
+        JPanel panelBotones = new JPanel();
+        panelBotones.setLayout(new GridLayout(2, 3, 20, 20));
+        panelBotones.setBorder(BorderFactory.createEmptyBorder(30, 50, 50, 50));
+        panelBotones.setBackground(new Color(245, 245, 245));
+
+        JButton btnCrearViaje = new JButton("Crear Viaje");
+        JButton btnListarDestinos = new JButton("Destinos");
+        JButton btnListarTransportes = new JButton("Transportes");
+        JButton btnListarResponsables = new JButton("Responsables");
+        JButton btnConsultarViajes = new JButton("Consultar Viajes");
+        JButton btnAsignarResponsable = new JButton("Asignar Responsable");
+
+        btnCrearViaje.setFont(new Font("Arial", Font.BOLD, 16));
+        btnListarDestinos.setFont(new Font("Arial", Font.BOLD, 16));
+        btnListarTransportes.setFont(new Font("Arial", Font.BOLD, 16));
+        btnListarResponsables.setFont(new Font("Arial", Font.BOLD, 16));
+        btnConsultarViajes.setFont(new Font("Arial", Font.BOLD, 16));
+        btnAsignarResponsable.setFont(new Font("Arial", Font.BOLD, 16));
+
+        // Asignar acciones
+        btnCrearViaje.addActionListener(e -> new CrearViajeView(viajeController, destinoController, transporteController).setVisible(true));
+        btnListarDestinos.addActionListener(e -> new DestinoView(destinoController).setVisible(true));
+        btnListarTransportes.addActionListener(e -> new TransporteView().setVisible(true));
+        btnListarResponsables.addActionListener(e -> new ResponsableView(responsableController).setVisible(true));
+        btnConsultarViajes.addActionListener(e -> new ConsultasViajesView().setVisible(true));
+        btnAsignarResponsable.addActionListener(e -> new AsignarResponsableView().setVisible(true));
+
+        panelBotones.add(btnCrearViaje);
+        panelBotones.add(btnListarDestinos);
+        panelBotones.add(btnListarTransportes);
+        panelBotones.add(btnListarResponsables);
+        panelBotones.add(btnConsultarViajes);
+        panelBotones.add(btnAsignarResponsable);
+
+        panel.add(panelBotones, BorderLayout.CENTER);
+
+        add(panel, BorderLayout.CENTER);
     }
 
     private JMenuBar crearMenu() {
