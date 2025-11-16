@@ -27,7 +27,7 @@ public class LectorJSON {
                 lote.getResponsables().forEach(agencia::agregarResponsable);//lo mismo para reponsable
             }
             if(lote.getTransportes()!=null){
-                lote.getTransportes().forEach(agencia::agregarTransporte);
+                lote.getTransportes().forEach(agencia::Agregar_TransporteALista);
             }
             System.out.println("Archivo cargado exitosamente desde " + RutaArchivo);
         }catch (IOException e){ //Archivo no encontrado

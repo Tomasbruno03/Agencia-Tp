@@ -1,10 +1,6 @@
 package model;
 import exceptions.ValidacionException;
-
-import java.util.Locale;
-import java.util.Scanner;
 import java.util.Objects;
-
 
 public class Destino implements Comparable <Destino>{
     private String Nombre;
@@ -23,7 +19,6 @@ public class Destino implements Comparable <Destino>{
         this.Nombre = Nom;
         this.CantKm = Ckm;
     }
-    public Destino(){}
 
     public String getNombre() {
         return Nombre;

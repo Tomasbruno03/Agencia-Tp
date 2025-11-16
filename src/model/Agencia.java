@@ -97,6 +97,25 @@ public class Agencia implements Serializable {
         return null;
     }
 
+    public Viaje buscarViajePorId(int idViaje) {
+        for (Transporte t : ListaTransporte) {
+            for (Viaje v : t.getListaViajes()) {
+                if (v.getIdViaje() == idViaje) {
+                    return v;
+                }
+            }
+        }
+        return null;
+    }
+
+    public ResponsableABordo buscarResponsablePorDni(String dni) {
+        for (ResponsableABordo r : SetResponsables) {
+            if (r.GetDni().equalsIgnoreCase(dni)) {
+                return r;
+            }
+        }
+        return null;
+    }
 
     public List<ResponsableABordo> GenerarRankingResponsables()
     {

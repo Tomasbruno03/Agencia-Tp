@@ -35,7 +35,6 @@ public abstract class Transporte implements Serializable{
 
     }
 
-
     public boolean estaDisponible(){
         boolean disp=true;
         Iterator<Viaje> Lv= listaViajes.iterator();

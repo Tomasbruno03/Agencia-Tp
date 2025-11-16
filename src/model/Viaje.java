@@ -112,7 +112,7 @@ public abstract class Viaje implements Comparable <Viaje>{
         estadoActual = estado.FINALIZADO;
         liberarResponsables();
     }
-    public estado getEstado(){return estadoActual;};
+    public estado getEstado(){return estadoActual;}
 
 
     public void liberarResponsables()
