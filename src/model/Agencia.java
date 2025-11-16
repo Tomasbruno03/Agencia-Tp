@@ -64,7 +64,7 @@ public class Agencia implements Serializable {
     }
 
 
-    public void Agregar_TransporteALista(Transporte t){
+    public void agregarTransporte(Transporte t){
         ListaTransporte.add(t);
     }
 
