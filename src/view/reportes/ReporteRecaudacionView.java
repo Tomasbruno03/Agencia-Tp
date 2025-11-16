@@ -7,53 +7,61 @@ import java.awt.*;
 import java.io.IOException;
 
 public class ReporteRecaudacionView extends JFrame {
-
-    private AgenciaController agenciaController;
-    private JTextArea txtReporte;
+    private JTextArea txtArea;
     private JButton btnExportar;
+    private AgenciaController agenciaController;
 
-    public ReporteRecaudacionView() {
-        super("Reporte de Recaudación");
+    public ReporteRecaudacionView(String tipoReporte) {
+        super("Reporte: " + tipoReporte);
         agenciaController = new AgenciaController();
-        initUI();
-        cargarReporte();
+        initUI(tipoReporte);
     }
 
-    private void initUI() {
-        setSize(600, 400);
+    private void initUI(String tipoReporte) {
+        setSize(500, 400);
+        setLayout(new BorderLayout());
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(10, 10));
 
-        txtReporte = new JTextArea();
-        txtReporte.setEditable(false);
-        JScrollPane scroll = new JScrollPane(txtReporte);
+        txtArea = new JTextArea();
+        txtArea.setEditable(false);
+        add(new JScrollPane(txtArea), BorderLayout.CENTER);
 
         btnExportar = new JButton("Exportar a archivo");
-        btnExportar.addActionListener(e -> exportarReporte());
-
-        add(scroll, BorderLayout.CENTER);
         add(btnExportar, BorderLayout.SOUTH);
 
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // Mostrar el reporte correspondiente
+        switch (tipoReporte) {
+            case "Destino":
+                txtArea.setText(agenciaController.getReporteRecaudacionDestinoComoTexto());
+                btnExportar.addActionListener(e -> exportarReporte("Destino"));
+                break;
+            case "Transporte":
+                txtArea.setText(agenciaController.getReporteRecaudacionTransporteComoTexto());
+                btnExportar.addActionListener(e -> exportarReporte("Transporte"));
+                break;
+            case "Responsables":
+                txtArea.setText(agenciaController.getRankingResponsablesComoTexto());
+                btnExportar.addActionListener(e -> exportarReporte("Responsables"));
+                break;
+        }
+
         setVisible(true);
     }
 
-    private void cargarReporte() {
-        String reporte = agenciaController.getReporteRecaudacionComoTexto();
-        txtReporte.setText(reporte);
-    }
-
-    private void exportarReporte() {
+    private void exportarReporte(String tipo) {
         JFileChooser fileChooser = new JFileChooser();
-        int seleccion = fileChooser.showSaveDialog(this);
-
-        if (seleccion == JFileChooser.APPROVE_OPTION) {
+        int opcion = fileChooser.showSaveDialog(this);
+        if (opcion == JFileChooser.APPROVE_OPTION) {
             String path = fileChooser.getSelectedFile().getAbsolutePath();
             try {
-                agenciaController.getReporteRecaudacionComoTexto(path);
+                switch (tipo) {
+                    case "Destino" -> agenciaController.exportarReporteRecaudacionDestino(path);
+                    case "Transporte" -> agenciaController.exportarReporteRecaudacionTransporte(path);
+                    case "Responsables" -> agenciaController.exportarRankingResponsables(path);
+                }
                 JOptionPane.showMessageDialog(this, "Reporte exportado correctamente.");
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(this, "Error al exportar: " + ex.getMessage());
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Error al exportar: " + e.getMessage());
             }
         }
     }
