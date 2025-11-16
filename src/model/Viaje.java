@@ -113,7 +113,7 @@ public abstract class Viaje implements Comparable <Viaje>{
         estadoActual = estado.FINALIZADO;
         liberarResponsables();
     }
-    public estado getEstado(){return estadoActual;};
+    public estado getEstado(){return estadoActual;}
 
 
     public void liberarResponsables()
@@ -192,7 +192,7 @@ public abstract class Viaje implements Comparable <Viaje>{
 
     public float getPorcentajeAvance() {
         float total = getKmTotales();
-        return total <= 0 ? 0 : (avanceKmRecorridos / total) * 100;
+        return total <= 0 ? 0 : (avanceKmRecorridos / total) * 100f;
     }
 
 

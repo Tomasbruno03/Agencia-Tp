@@ -52,7 +52,7 @@ public class Agencia implements Serializable {
         DestinosDisponibles.add(d);
     }
 
-    public Set<Transporte> transportesPorDestino(Destino d) {
+    public Set<Transporte> transportesParaDestino(Destino d) {
         Set<Transporte> ListaDisponibles= new HashSet<Transporte>();
 
         for (Transporte t : this.ListaTransporte){
@@ -68,6 +68,9 @@ public class Agencia implements Serializable {
         ListaTransporte.add(t);
     }
 
+    public int obtenerProximoNumeroDeViaje(Destino d) {
+        return CantidadDeViajesxDestino.getOrDefault(d, 0) + 1;
+    }
 
     public Transporte buscarTransportePorPatente(String patente){
         for(Transporte t : ListaTransporte){
@@ -97,6 +100,32 @@ public class Agencia implements Serializable {
         return null;
     }
 
+    public Viaje buscarViajePorId(int idViaje) {
+        for (Transporte t : ListaTransporte) {
+            for (Viaje v : t.getListaViajes()) {
+                if (v.getIdViaje() == idViaje) {
+                    return v;
+                }
+            }
+        }
+        return null;
+    }
+
+    public ResponsableABordo buscarResponsablePorDni(String dni) {
+        for (ResponsableABordo r : SetResponsables) {
+            if (r.GetDni().equalsIgnoreCase(dni)) {
+                return r;
+            }
+        }
+        return null;
+    }
+
+    public List<ResponsableABordo> GenerarRankingResponsables()
+    {
+        List<ResponsableABordo> r= new ArrayList<>(this.getResponsables());
+        Collections.sort(r);
+        return r;
+    }
 
 
     public Viaje crearViaje(String nombreViaje, Destino destino,int cantPasajeros, Transporte t){
@@ -126,9 +155,48 @@ public class Agencia implements Serializable {
         }
         t.agregarViaje(nuevoViaje);
 
+
         CantidadDeViajesxDestino.put(destino,CantidadDeViajesxDestino.getOrDefault(destino, 0) + 1);
 
         return  nuevoViaje;
+    }
+
+    public Map<Destino, Float> getReporteRecaudacionPorDestino() {
+
+
+        Map<Destino, Float> recaudacion = new HashMap<>();
+
+        for (Transporte t : this.ListaTransporte) {
+
+            for (Viaje v : t.getListaViajes()) {
+                if (v.estaFinalizado()) {
+                    Destino d = v.getDestinoDelViaje();
+                    float costo = v.calcularCostoFinal(); // (Asegurate de corregir esto)
+                    recaudacion.put(d, recaudacion.getOrDefault(d, 0f) + costo);
+                }
+            }
+        }
+        return recaudacion;
+    }
+    public Map<Transporte,Float> GenerarReporteRecaudadoPorTransporte()
+    {
+        Map<Transporte,Float>recaudacion = new HashMap<>();;
+
+        for(Transporte t: ListaTransporte)
+        {
+
+            for(Viaje v: t.getListaViajes())
+            {
+                if(v.estaFinalizado())
+                {
+                    float recaudadoxT=v.calcularCostoFinal();
+                    recaudacion.put(t, recaudacion.getOrDefault(t, 0f) + recaudadoxT);
+                }
+
+            }
+        }
+
+        return recaudacion;
     }
 
 

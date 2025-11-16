@@ -15,7 +15,7 @@ public class TransporteController {
             throw new Exception("No existe el destino:" + nombreDestino);
         }
 
-        return agencia.transportesPorDestino(destino);
+        return agencia.transportesParaDestino(destino);
     }
 }
 

@@ -6,32 +6,31 @@ public class Auto extends Transporte {
     private float ValorBasePorViaje;
     private float ValorPorKmRecorrido;
 
-public Auto (String patente, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
-    super(patente,  4, velocidadPromedioXhora);
-    this.ValorBasePorViaje = _ValorBasePorViaje;
-    this.ValorPorKmRecorrido = _ValorPorKmRecorrido;
-} //Constructor tengo que cambiar el nombre de las variables como en c?
+    public Auto (String patente, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
+        super(patente,  4, velocidadPromedioXhora);
+        this.ValorBasePorViaje = _ValorBasePorViaje;
+        this.ValorPorKmRecorrido = _ValorPorKmRecorrido;
+    } //Constructor tengo que cambiar el nombre de las variables como en c?
 
-public float  getValorBasePorViaje(){ return ValorBasePorViaje; }
+    public float  getValorBasePorViaje(){ return ValorBasePorViaje; }
 
-public void setValorBasePorViaje(float ValorBasePorViaje){
-    if(ValorBasePorViaje>0){
-        this.ValorBasePorViaje=ValorBasePorViaje;
-    }else {
-        this.ValorBasePorViaje=0; //Tiene que ir?
-        }
-}
-public float  getValorPorKmRecorrido(){return ValorPorKmRecorrido; //Tengo que chequear que sea disntinto de 0?
-}
-
-public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
-    if(ValorPorKmRecorrido>0)
-        this.ValorPorKmRecorrido=ValorPorKmRecorrido;
+    public void setValorBasePorViaje(float ValorBasePorViaje){
+        if(ValorBasePorViaje>0){
+            this.ValorBasePorViaje=ValorBasePorViaje;
+        }else {
+            this.ValorBasePorViaje=0; //Tiene que ir?
+            }
     }
+    public float  getValorPorKmRecorrido() { return ValorPorKmRecorrido; }
+
+    public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
+        if(ValorPorKmRecorrido>0)
+            this.ValorPorKmRecorrido=ValorPorKmRecorrido;
+        }
 
     @Override
-    public float calcularCosto(float kilometros,int pasajeros){
-        return this.ValorBasePorViaje + (this.ValorPorKmRecorrido * kilometros);
+    public float calculaCostoPorViaje(float kilometros,int pasajeros){
+        return this.ValorBasePorViaje + (ValorPorKmRecorrido * kilometros);
     }
 
     @Override

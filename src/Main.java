@@ -6,7 +6,7 @@ public class Main {
         System.out.println("Iniciando sistema de Agencia...");
         Agencia miAgencia = Agencia.getInstance();
         LectorJSON lector = new LectorJSON();
-        lector.cargarDatos(miAgencia, "resources/datos_agencia.json");
+        lector.cargarDatos(miAgencia, "resources/LoteDatos.json");
         System.out.println("Sistema listo. Agencia cargada.");
     }
 }
