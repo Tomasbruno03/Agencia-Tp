@@ -45,7 +45,7 @@ public class ResponsableABordo implements Comparable<ResponsableABordo> {
 
     @Override
     public int compareTo(ResponsableABordo otro){
-        return this.Dni.compareTo(otro.GetDni()); //devuelve 0 si son iguales,-1 o 1
+        return Float.compare(otro.getCantKmAcumulados(), this.getCantKmAcumulados()); //devuelve 0 si son iguales,-1 o 1
     }
     @Override
     public boolean equals(Object o){
