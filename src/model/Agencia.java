@@ -120,12 +120,17 @@ public class Agencia implements Serializable {
         return ListaDisponibles;
     }
 
+<<<<<<< HEAD
     /**
      * Registra un transporte en la agencia.
      *
      * @param t transporte a agregar.
      */
     public void Agregar_TransporteALista(Transporte t){
+=======
+
+    public void agregarTransporte(Transporte t){
+>>>>>>> 8b501e31872cb16bc373cf7fa1a39a8fb8951e50
         ListaTransporte.add(t);
     }
     /**

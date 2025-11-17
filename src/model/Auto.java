@@ -33,7 +33,7 @@ public class Auto extends Transporte {
      * Establece el valor base cobrado por viaje para este auto.
      * Solo se actualiza si el valor recibido es positivo.
      *
-     * @param valorBasePorViaje nuevo valor base por viaje.
+     * @param ValorBasePorViaje nuevo valor base por viaje.
      */
     public void setValorBasePorViaje(float ValorBasePorViaje){
         if(ValorBasePorViaje>0){
@@ -48,7 +48,7 @@ public class Auto extends Transporte {
      * Establece el valor cobrado por kilómetro recorrido.
      * Solo se actualiza si el valor recibido es positivo.
      *
-     * @param valorPorKmRecorrido nuevo valor por kilómetro recorrido.
+     * @param ValorPorKmRecorrido nuevo valor por kilómetro recorrido.
      */
     public void setValorPorKmRecorrido(float ValorPorKmRecorrido){
         if(ValorPorKmRecorrido>0)
