@@ -11,10 +11,31 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Controlador principal encargado de gestionar todas las operaciones de consulta
+ * y generación de reportes relacionadas con la {@link Agencia}.
+ * <p>
+ * Esta clase funciona como intermediario entre la vista (o interfaz de usuario)
+ * y el modelo, encapsulando la lógica necesaria para producir reportes de:
+ * <ul>
+ *     <li>Ranking de responsables según kilómetros acumulados.</li>
+ *     <li>Recaudación total por destino.</li>
+ *     <li>Recaudación total por transporte.</li>
+ * </ul>
+ * Además, brinda métodos para exportar dichos reportes en archivos de texto.
+ */
 public class AgenciaController {
+
+    /** Instancia única de la agencia que administra los datos del sistema. */
 
     private final Agencia agencia=Agencia.getInstance();;
 
+    /**
+     * Genera un texto formateado que contiene el ranking de responsables ordenados
+     * por cantidad de kilómetros recorridos, de mayor a menor.
+     *
+     * @return una cadena con el ranking de responsables, lista para mostrar por pantalla.
+     */
     public String getRankingResponsablesComoTexto() {
 
         // 1. Pide los datos puros al Modelo
@@ -33,6 +54,14 @@ public class AgenciaController {
 
         return sb.toString();
     }
+
+    /**
+     * Exporta a un archivo de texto el ranking de responsables generado por
+     * {@link #getRankingResponsablesComoTexto()}.
+     *
+     * @param filePath ruta del archivo donde se guardará el ranking.
+     * @throws IOException si ocurre un error al escribir el archivo.
+     */
     public void exportarRankingResponsables(String filePath) throws IOException {
 
         String contenidoDelRanking = getRankingResponsablesComoTexto();
@@ -43,7 +72,12 @@ public class AgenciaController {
             throw new IOException("Error al guardar el archivo de ranking: " + e.getMessage());
         }
     }
-
+    /**
+     * Construye un texto con la recaudación total obtenida por cada destino.
+     * Solo se consideran los viajes finalizados.
+     *
+     * @return una cadena formateada con el detalle de recaudación por destino.
+     */
     public String getReporteRecaudacionDestinoComoTexto() {
 
         Map<Destino, Float> reporteDatos = agencia.getReporteRecaudacionPorDestino();
@@ -106,7 +140,12 @@ public class AgenciaController {
         sb.append(String.format("MONTO TOTAL RECAUDADO: $%.2f\n", montoTotalRecaudado));
         return sb.toString();
     }
-
+    /**
+     * Exporta el reporte de recaudación por transporte a un archivo de texto.
+     *
+     * @param filePath ruta del archivo donde se almacenará el archivo generado.
+     * @throws IOException si ocurre un error durante la escritura del archivo.
+     */
     public void exportarReporteRecaudacionTransporte(String filePath) throws IOException {
 
         String contenido = getReporteRecaudacionTransporteComoTexto();

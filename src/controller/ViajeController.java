@@ -2,11 +2,29 @@ package controller;
 
 import exceptions.ValidacionException;
 import model.*;
-
+/**
+ * Controlador encargado de gestionar todas las operaciones relacionadas con los
+ * {@link Viaje} dentro del sistema. Permite crear viajes, iniciar su recorrido,
+ * avanzar su progreso, finalizarlos y administrar los responsables asignados.
+ * <p>
+ * Este controlador actúa como intermediario entre la vista y la lógica del modelo,
+ * realizando validaciones y transformando excepciones internas en mensajes más claros.
+ */
 public class ViajeController {
 
     Agencia agencia = Agencia.getInstance();
-
+    /**
+     * Crea un nuevo viaje a partir de un destino, una patente de transporte y la cantidad de pasajeros.
+     * <p>
+     * Valida que el destino y el transporte existan. El nombre del viaje se genera automáticamente
+     * combinando el nombre del destino y un número correlativo.
+     *
+     * @param nombreDestino nombre del destino al cual se realizará el viaje.
+     * @param patente       patente del transporte asignado.
+     * @param cantPasajeros cantidad de pasajeros que participarán del viaje.
+     * @return el {@link Viaje} creado correctamente.
+     * @throws ValidacionException si el destino o el transporte no existen.
+     */
     public Viaje crearViaje(String nombreDestino, String patente, int cantPasajeros) {
 
         Destino d = agencia.buscarDestinoPorNombre(nombreDestino);
