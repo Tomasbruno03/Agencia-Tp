@@ -51,6 +51,7 @@ public class ResponsableView extends JFrame {
         tablaModel.setRowCount(0); // limpiar tabla
         try {
             Set<ResponsableABordo> responsables = Agencia.getInstance().getResponsables();
+            System.out.println(responsables.toString());
             for (ResponsableABordo r : responsables) {
                 tablaModel.addRow(new Object[]{
                         r.GetNombre(),

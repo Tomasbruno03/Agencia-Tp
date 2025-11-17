@@ -20,6 +20,8 @@ public class ResponsableController {
         }
 
         ResponsableABordo nuevo = new ResponsableABordo(nombre, true, dni, sueldoPorViaje); // si es duplicado, acá saltará la excepción
+        if(nuevo == null)
+            throw new ValidacionException("No se creo el responsable.");
 
         agencia.agregarResponsable(nuevo);
 

@@ -18,4 +18,8 @@ public class LargaDistancia extends Viaje{
         }
         return Sueldo;
     }
+    @Override
+    public String toString(){
+        return "LargaDistancia ";
+    }
 }

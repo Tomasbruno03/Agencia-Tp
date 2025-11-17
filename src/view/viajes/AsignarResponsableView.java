@@ -33,38 +33,79 @@ public class AsignarResponsableView extends JFrame {
         setVisible(true);
     }
 
-    private void initUI() {
-        setLayout(new BorderLayout());
-        setSize(500, 300);
+    public void initUI() {
+        setTitle(modoQuitar ? "Quitar Responsable de Viaje" : "Asignar Responsable a Viaje");
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel(new GridLayout(3, 2, 10, 10));
+        JPanel panel = new JPanel(new GridBagLayout());
         panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
 
         // Combo de viajes
-        panel.add(new JLabel("Viaje:"));
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        panel.add(new JLabel("Viaje:"), gbc);
 
         comboViajes = new JComboBox<>();
         cargarViajes();
-        panel.add(comboViajes);
-
+        if (comboViajes.getItemCount() > 0) comboViajes.setSelectedIndex(0); // seleccionar primero
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        panel.add(comboViajes, gbc);
 
         // Combo de responsables
-        panel.add(new JLabel(modoQuitar ? "Responsable asignado:" : "Responsable disponible:"));
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        panel.add(new JLabel(modoQuitar ? "Responsable asignado:" : "Responsable disponible:"), gbc);
 
         comboResponsables = new JComboBox<>();
-        cargarResponsables();
-        panel.add(comboResponsables);
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        panel.add(comboResponsables, gbc);
 
         // Botón principal
         JButton btnEjecutar = new JButton(modoQuitar ? "Quitar" : "Asignar");
-        btnEjecutar.addActionListener(e -> ejecutarAccion());
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.gridwidth = 2;
+        panel.add(btnEjecutar, gbc);
 
         add(panel, BorderLayout.CENTER);
-        add(btnEjecutar, BorderLayout.SOUTH);
+
+        // Action listeners
+        comboViajes.addActionListener(e -> cargarResponsables());
+        btnEjecutar.addActionListener(e -> ejecutarAccion());
+
+        cargarResponsables(); // cargar al inicio
+        pack(); // ajusta la ventana al contenido
+        setVisible(true);
     }
 
-    private void cargarViajes() {
+    public void cargarResponsables() {
+        comboResponsables.removeAllItems();
+        Agencia agencia = Agencia.getInstance();
+
+        if (modoQuitar) {
+            Viaje viajeSeleccionado = (Viaje) comboViajes.getSelectedItem();
+            if (viajeSeleccionado != null) {
+                for (ResponsableABordo r : viajeSeleccionado.getResponsables()) {
+                    comboResponsables.addItem(r);
+                }
+            }
+        } else {
+            for (ResponsableABordo r : agencia.getResponsables()) {
+                if (r.GetEstaDisp()) {
+                    comboResponsables.addItem(r);
+                }
+            }
+        }
+    }
+
+
+    public void cargarViajes() {
         comboViajes.removeAllItems();
 
         Agencia agencia = Agencia.getInstance();
@@ -77,33 +118,7 @@ public class AsignarResponsableView extends JFrame {
         }
     }
 
-    private void cargarResponsables() {
-        comboResponsables.removeAllItems();
-
-        Agencia agencia = Agencia.getInstance();
-        Set<ResponsableABordo> responsables = agencia.getResponsables();
-
-        if (modoQuitar) {
-            // Mostrar SOLO los responsables asignados al viaje
-            Viaje viajeSeleccionado = (Viaje) comboViajes.getSelectedItem();
-            if (viajeSeleccionado != null) {
-                for (ResponsableABordo r : viajeSeleccionado.getResponsables()) {
-                    comboResponsables.addItem(r);
-                }
-            }
-        } else {
-            // Mostrar responsables disponibles
-            for (ResponsableABordo r : responsables) {
-                if (r.GetEstaDisp()) {
-                    comboResponsables.addItem(r);
-                }
-            }
-        }
-
-        comboViajes.addActionListener(e -> cargarResponsables());
-    }
-
-    private void ejecutarAccion() {
+    public void ejecutarAccion() {
 
         Viaje viaje = (Viaje) comboViajes.getSelectedItem();
         ResponsableABordo responsable = (ResponsableABordo) comboResponsables.getSelectedItem();

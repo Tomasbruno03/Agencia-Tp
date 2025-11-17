@@ -62,7 +62,8 @@
       "capacidadPasajeros": 4,
       "velocidadPromedioXHora": 90.0,
       "valorBasePorViaje": 10000.0,
-      "valorPorKmRecorrido": 150.0
+      "valorPorKmRecorrido": 150.0,
+      "listaViajes": []
     },
     {
       "tipo": "Combi",
@@ -70,14 +71,16 @@
       "capacidadPasajeros": 15,
       "velocidadPromedioXHora": 80.0,
       "valorBasePorViaje": 40000.0,
-      "valorPorPasajeroPorKmRecorrido": 20.0
+      "valorPorPasajeroPorKmRecorrido": 20.0,
+      "listaViajes": []
     },
     {
       "tipo": "ColectivoSemiCama",
       "patente": "AE789DD",
       "capacidadPasajeros": 40,
       "velocidadPromedioXHora": 75.0,
-      "valorPorPasajeroPorKmRecorrido": 30.0
+      "valorPorPasajeroPorKmRecorrido": 30.0,
+      "listaViajes": []
     },
     {
       "tipo": "ColectivoCocheCama",
@@ -87,7 +90,8 @@
       "cantSemiCama": 6,
       "cantCama": 26,
       "valorPorPasajeroPorKmRecorrido": 30.0,
-      "valorPlazaTipoCamaPorKmRecorrido": 50.0
+      "valorPlazaTipoCamaPorKmRecorrido": 50.0,
+      "listaViajes": []
     },
     {
       "tipo": "Auto",
@@ -95,7 +99,8 @@
       "capacidadPasajeros": 4,
       "velocidadPromedioXHora": 110.0,
       "valorBasePorViaje": 11000.0,
-      "valorPorKmRecorrido": 170.0
+      "valorPorKmRecorrido": 170.0,
+      "listaViajes": []
     }
   ]
 }
