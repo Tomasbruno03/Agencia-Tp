@@ -2,8 +2,10 @@ package model;
 
 import exceptions.ValidacionException;
 
+import java.io.Serializable;
 
-public class LargaDistancia extends Viaje{
+
+public class LargaDistancia extends Viaje implements Serializable {
 
     public LargaDistancia (int idVia, String nom, Destino destinoViaje,int cantp,Transporte t){
         super(idVia,nom,destinoViaje,cantp,t);

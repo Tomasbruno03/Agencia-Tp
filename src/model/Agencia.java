@@ -8,6 +8,8 @@ import java.util.Set.*;
 
 public class Agencia implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private Set<Transporte> ListaTransporte;
     private Set<ResponsableABordo> SetResponsables;
     private Set<Destino> DestinosDisponibles; // catálogo
@@ -32,6 +34,10 @@ public class Agencia implements Serializable {
 
 
     }
+    public static void setInstance(Agencia agencia) {
+        instancia = agencia;
+    }
+
     // #### GETTERS SEGUROS (solo lectura) ####
     public Set<Transporte> getTransportes() {
         return Collections.unmodifiableSet(ListaTransporte);
@@ -50,6 +56,23 @@ public class Agencia implements Serializable {
             throw new DestinoYaExisteException(d.getNombre());
         }
         DestinosDisponibles.add(d);
+    }
+    public void relinkData() { // Le cambié el nombre
+        System.out.println("Relinkeando datos cargados...");
+
+        // 1. Relinkea Transportes <-> Viajes
+        for (Transporte t : this.ListaTransporte) {
+            if (t.getListaViajes() != null) {
+                for (Viaje v : t.getListaViajes()) {
+                    // (El link que ya teníamos)
+                    v.setTransporteAsignado(t);
+                }
+            }
+        }
+
+
+
+        System.out.println("Relinkeo completo.");
     }
 
     public Set<Transporte> transportesParaDestino(Destino d) {

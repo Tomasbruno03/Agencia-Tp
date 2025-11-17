@@ -1,10 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class ColectivoCocheCama extends Transporte{
+public class ColectivoCocheCama extends Transporte implements Serializable {
 private int CantSemiCama;
 private int CantCama;
+private static final long serialVersionUID = 1L;
 private float ValorPorPasajeroPorKmRecorrido;
 private float ValorPlazaTipoCamaPorKmRecorrido;
 

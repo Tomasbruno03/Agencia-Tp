@@ -1,11 +1,13 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Combi extends Transporte {
+public class Combi extends Transporte implements Serializable {
 
     private float valorBasePorViaje;
     private float valorPorPasajeroPorKmRecorrido;
+    private static final long serialVersionUID = 1L;
 
     public Combi(String patente, float velocidadPromedioXhora, float valorBasePorViaje, float valorPorPasajeroPorKmRecorrido) {
         super(patente, 16, velocidadPromedioXhora); //La capacidad la mando como parametro fijo?

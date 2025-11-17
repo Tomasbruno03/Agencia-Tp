@@ -1,9 +1,13 @@
 package model;
 
 import exceptions.ValidacionException;
+import model.Viaje;
 
-public class CortaDistancia extends Viaje{
+import java.io.Serializable;
+
+public class CortaDistancia extends Viaje implements Serializable {
     private static final float cobrobase = 1500; // Valor inicial por defecto
+    private static final long serialVersionUID = 1L;
 
     public CortaDistancia(int idVia, String nom, Destino destinoViaje,int cantP,Transporte t){
         super(idVia,nom,destinoViaje,cantP,t);

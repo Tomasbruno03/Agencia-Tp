@@ -1,10 +1,12 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Auto extends Transporte {
+public class Auto extends Transporte implements Serializable {
     private float ValorBasePorViaje;
     private float ValorPorKmRecorrido;
+    private static final long serialVersionUID = 1L;
 
     public Auto (String patente, float velocidadPromedioXhora, float _ValorBasePorViaje, float _ValorPorKmRecorrido){
         super(patente,  4, velocidadPromedioXhora);

@@ -19,7 +19,7 @@ public class ResponsableController {
             throw new ValidacionException("El sueldo por viaje debe ser positivo.");
         }
 
-        ResponsableABordo nuevo = new ResponsableABordo(nombre, true, dni, sueldoPorViaje); // si es duplicado, acá saltará la excepción
+        ResponsableABordo nuevo = new ResponsableABordo(nombre, dni, sueldoPorViaje); // si es duplicado, acá saltará la excepción
         if(nuevo == null)
             throw new ValidacionException("No se creo el responsable.");
 

@@ -10,6 +10,7 @@ public abstract class Transporte implements Serializable{
     private boolean disponible;
     private float velocidadPromedioXhora;
 
+    private static final long serialVersionUID = 1L;
     public Transporte(String patente, int capacidadPasajeros, float velocidadPromedioXhora){
         this.patente = patente;
         this.capacidadPasajeros = capacidadPasajeros;

@@ -3,22 +3,24 @@ package model;
 import exceptions.ValidacionException;
 
 import java.beans.DesignMode;
+import java.io.Serializable;
 import java.util.*;
 
 ;
 
-public abstract class Viaje implements Comparable <Viaje>{
+public abstract class Viaje implements Comparable <Viaje>, Serializable {
 
 
     // #### DECLARACION DE VARIABLES ####
     private int idViaje; //Es clave primariaAutoincremental
     private String nombre; // El nombre es unico, del viaje del Destino y el Id
     private Destino destinoDelViaje;
+    private static final long serialVersionUID = 1L;
     private int cantPasajeros; // Empieza en 1. Suponiendo que al crear el viaje es porque al menos un pasajero lo solicito
     private estado estadoActual;
-    private Set<ResponsableABordo>Responsables= new HashSet<>();
+    private  Set<ResponsableABordo>Responsables= new HashSet<>();
     private float avanceKmRecorridos;
-    private Transporte TransporteAsignado;
+    private transient Transporte TransporteAsignado;
 
 
     // CONSTRUCTOR
@@ -64,6 +66,7 @@ public abstract class Viaje implements Comparable <Viaje>{
     public Transporte getTransporteAsignado() {
         return TransporteAsignado;
     }
+
 
     @Override
     public int compareTo(Viaje o) {
@@ -156,6 +159,7 @@ public abstract class Viaje implements Comparable <Viaje>{
     {
         this.cantPasajeros--;
     }
+
     public void setTransporteAsignado(Transporte transporte) throws ValidacionException {
         if (transporte == null) {
             throw new ValidacionException("El transporte no puede ser nulo.");

@@ -1,17 +1,21 @@
 package model;
 
+import java.lang.*;
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ResponsableABordo implements Comparable<ResponsableABordo> {
+public class ResponsableABordo implements Comparable<ResponsableABordo>, Serializable {
     private String nombre;
     private Boolean EstaDisp; //S o N
     private String Dni;
     private float SueldoXViaje;
+    private static final long serialVersionUID = 1L;
     private float CantKmAcumulados;
 
-    public ResponsableABordo(String nombre, Boolean EstaDisp, String Dni, float SueldoXViaje){
+
+    public ResponsableABordo(String nombre, String Dni, float SueldoXViaje){
         this.nombre = nombre;
-        this.EstaDisp = EstaDisp;
+        this.EstaDisp = true;
         this.Dni = Dni;
         this.SueldoXViaje = SueldoXViaje;
         CantKmAcumulados=0;

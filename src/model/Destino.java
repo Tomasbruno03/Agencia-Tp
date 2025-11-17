@@ -1,10 +1,15 @@
 package model;
 import exceptions.ValidacionException;
+
+
+import java.io.Serializable;
+
 import java.util.Objects;
 
-public class Destino implements Comparable <Destino>{
+public class Destino implements Comparable <Destino>, Serializable {
     private String Nombre;
     private float CantKm;
+    private static final long serialVersionUID = 1L;
 
     public Destino(String Nom, float Ckm) throws ValidacionException {
         //Valida datos

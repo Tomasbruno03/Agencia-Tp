@@ -1,9 +1,11 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class ColectivoSemiCama extends Transporte{
+public class ColectivoSemiCama extends Transporte implements Serializable {
     private float valorPorPasajerosPorKmRecorrido;
+    private static final long serialVersionUID = 1L;
 
     public ColectivoSemiCama (String patente, float velocidadPromedioXhora, float valorPorPasajerosPorKmRecorrido) {
 
