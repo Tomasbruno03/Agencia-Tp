@@ -1,10 +1,13 @@
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import model.Agencia;
 import model.Destino;
 import model.ResponsableABordo;
 import model.Transporte;
 
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -154,6 +157,13 @@ public class AgenciaController {
             Files.writeString(Paths.get(filePath), contenido);
         } catch (IOException e) {
             throw new IOException("Error al guardar el reporte de transportes: " + e.getMessage());
+        }
+    }
+
+    public void guardarDatos() throws IOException {
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+        try (FileWriter writer = new FileWriter("resources/datos_agencia.json")) {
+            gson.toJson(agencia, writer);
         }
     }
 }
