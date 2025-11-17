@@ -33,22 +33,26 @@
     {
       "nombre": "Ana Gomez",
       "Dni": "27240600",
-      "SueldoXViaje": 50000.0
+      "SueldoXViaje": 50000.0,
+      "EstaDisp": true
     },
     {
       "nombre": "Carlos Ruiz",
       "Dni": "35351233",
-      "SueldoXViaje": 52000.0
+      "SueldoXViaje": 52000.0,
+      "EstaDisp": true
     },
     {
       "nombre": "Julian Alvarez",
       "Dni": "46310507",
-      "SueldoXViaje": 60000.0
+      "SueldoXViaje": 60000.0,
+      "EstaDisp": true
     },
     {
       "nombre": "Valentina Lopez",
       "Dni": "27417890",
-      "SueldoXViaje": 64000.0
+      "SueldoXViaje": 64000.0,
+      "EstaDisp": true
     }
   ],
   "transportes": [
