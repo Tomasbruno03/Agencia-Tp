@@ -19,7 +19,11 @@ public class AsignarResponsableView extends JFrame {
     private boolean modoQuitar; // false = asignar, true = quitar
 
     public AsignarResponsableView() {
-        modoQuitar = false;
+        super("Asignar Responsable a Viaje");
+        this.modoQuitar = false;
+        this.viajeController = new ViajeController();
+        this.responsableController = new ResponsableController();
+        initUI();
     }
 
     public AsignarResponsableView(boolean modoQuitar) {
@@ -30,7 +34,6 @@ public class AsignarResponsableView extends JFrame {
         this.responsableController = new ResponsableController();
 
         initUI();
-        setVisible(true);
     }
 
     public void initUI() {
@@ -81,7 +84,7 @@ public class AsignarResponsableView extends JFrame {
 
         cargarResponsables(); // cargar al inicio
         pack(); // ajusta la ventana al contenido
-        setVisible(true);
+        setMinimumSize(new Dimension(450, 200));
     }
 
     public void cargarResponsables() {

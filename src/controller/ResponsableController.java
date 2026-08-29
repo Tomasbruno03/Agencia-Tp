@@ -2,15 +2,7 @@ package controller;
 
 import exceptions.ValidacionException;
 import model.*;
-/**
- * Controlador encargado de gestionar las operaciones relacionadas con los
- * {@link ResponsableABordo}. Centraliza la creación, validación y búsqueda
- * de responsables dentro de la {@link Agencia}.
- * <p>
- * Esta clase actúa como intermediaria entre la capa de presentación y el modelo,
- * garantizando que los datos ingresados sean válidos antes de delegar la operación
- * al sistema principal.
- */
+
 public class ResponsableController {
 
     public ResponsableABordo crearResponsable(String dni, String nombre, float sueldoPorViaje) {
@@ -27,7 +19,7 @@ public class ResponsableController {
             throw new ValidacionException("El sueldo por viaje debe ser positivo.");
         }
 
-        ResponsableABordo nuevo = new ResponsableABordo(nombre, true, dni, sueldoPorViaje); // si es duplicado, acá saltará la excepción
+        ResponsableABordo nuevo = new ResponsableABordo(nombre, dni, sueldoPorViaje); // si es duplicado, acá saltará la excepción
         if(nuevo == null)
             throw new ValidacionException("No se creo el responsable.");
 
