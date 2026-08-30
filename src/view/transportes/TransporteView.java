@@ -2,8 +2,7 @@ package view.transportes;
 
 import controller.TransporteController;
 import exceptions.ValidacionException;
-import model.Transporte;
-import model.Agencia;
+import model.*;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -34,8 +33,13 @@ public class TransporteView extends JFrame {
         setLayout(new BorderLayout());
 
         modeloTabla = new DefaultTableModel(
-                new Object[]{"Patente", "Capacidad", "Velocidad (km/h)"}, 0
-        );
+                new Object[]{"Tipo", "Patente", "Capacidad", "Velocidad (km/h)"}, 0
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         tablaTransporte = new JTable(modeloTabla);
         JScrollPane scroll = new JScrollPane(tablaTransporte);
 
@@ -61,10 +65,19 @@ public class TransporteView extends JFrame {
 
         for (Transporte t : transportes) {
             modeloTabla.addRow(new Object[]{
+                    obtenerTipoTransporte(t),
                     t.getPatente(),
                     t.getCapacidadPasajeros(),
                     t.getVelocidadPromedioXhora()
             });
         }
+    }
+
+    private String obtenerTipoTransporte(Transporte t) {
+        if (t instanceof Auto) return "Auto";
+        if (t instanceof Combi) return "Combi";
+        if (t instanceof ColectivoSemiCama) return "Colectivo Semi Cama";
+        if (t instanceof ColectivoCocheCama) return "Colectivo Coche Cama";
+        return t.getClass().getSimpleName();
     }
 }

@@ -60,6 +60,17 @@ public class ConsultasViajesView extends JFrame {
         Agencia agencia = Agencia.getInstance();
         for (Destino d : agencia.getDestinos()) comboDestinos.addItem(d);
     }
+    // Helper to obtain a friendly transport type string, reusing logic from TransporteView
+    private String obtenerTipoTransporte(Viaje v) {
+        if (v == null) return "";
+        Transporte t = v.getTransporteAsignado();
+        if (t == null) return "";
+        if (t instanceof Auto) return "Auto";
+        if (t instanceof Combi) return "Combi";
+        if (t instanceof ColectivoSemiCama) return "Colectivo Semi Cama";
+        if (t instanceof ColectivoCocheCama) return "Colectivo Coche Cama";
+        return t.getClass().getSimpleName();
+    }
 
     private void buscarPorDestino() {
         resultados.setText("");
@@ -67,7 +78,26 @@ public class ConsultasViajesView extends JFrame {
         if (d == null) return;
 
         List<Viaje> lista = consultaController.listarViajesPorDestino(d.getNombre());
-        for (Viaje v : lista) resultados.append(v.toString() + "\n");
+                    for (Viaje v : lista) {
+                String tipoTransporte = obtenerTipoTransporte(v);
+                String patente = v.getTransporteAsignado().getPatente();
+                String nombreResp = "Sin responsable";
+                String dniResp = "-";
+                java.util.Set<ResponsableABordo> responsables = v.getResponsables();
+                if (!responsables.isEmpty()) {
+                    ResponsableABordo r = responsables.iterator().next();
+                    nombreResp = r.GetNombre();
+                    dniResp = r.GetDni();
+                }
+                String linea = String.format("%s | %s | %s | %s | %s | %s",
+                        v.getNombre(),
+                        v.getEstado(),
+                        tipoTransporte,
+                        patente,
+                        nombreResp,
+                        dniResp);
+                resultados.append(linea + "\n");
+            }
     }
 
     private void buscarPorEstado() {
@@ -76,6 +106,25 @@ public class ConsultasViajesView extends JFrame {
         if (e == null) return;
 
         List<Viaje> lista = consultaController.listarViajesPorEstado(e);
-        for (Viaje v : lista) resultados.append(v.toString() + "\n");
+        for (Viaje v : lista) {
+            String tipoTransporte = obtenerTipoTransporte(v);
+            String patente = v.getTransporteAsignado().getPatente();
+            String nombreResp = "Sin responsable";
+            String dniResp = "-";
+            java.util.Set<ResponsableABordo> responsables = v.getResponsables();
+            if (!responsables.isEmpty()) {
+                ResponsableABordo r = responsables.iterator().next();
+                nombreResp = r.GetNombre();
+                dniResp = r.GetDni();
+            }
+            String linea = String.format("%s | %s | %s | %s | %s | %s",
+                    v.getNombre(),
+                    v.getEstado(),
+                    tipoTransporte,
+                    patente,
+                    nombreResp,
+                    dniResp);
+            resultados.append(linea + "\n");
+        }
     }
 }

@@ -23,6 +23,15 @@ public class ViajeConsultaController {
             }
         }
 
+        // Sort: name ascending, then estado priority PENDIENTE -> EN_CURSO -> FINALIZADO
+        resultado.sort(java.util.Comparator.comparing(Viaje::getNombre)
+                .thenComparing(v -> {
+                    switch (v.getEstado()) {
+                        case PENDIENTE: return 0;
+                        case EN_CURSO: return 1;
+                        default: return 2; // FINALIZADO
+                    }
+                }));
         return resultado;
     }
 
@@ -39,6 +48,15 @@ public class ViajeConsultaController {
             }
         }
 
+        // Sort: name ascending, then estado priority PENDIENTE -> EN_CURSO -> FINALIZADO
+        resultado.sort(java.util.Comparator.comparing(Viaje::getNombre)
+                .thenComparing(v -> {
+                    switch (v.getEstado()) {
+                        case PENDIENTE: return 0;
+                        case EN_CURSO: return 1;
+                        default: return 2; // FINALIZADO
+                    }
+                }));
         return resultado;
     }
 }

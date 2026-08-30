@@ -13,10 +13,12 @@ import java.util.Set;
 public class CrearViajeView extends JFrame {
 
     private JComboBox<String> comboDestinos;
-    private JComboBox<String> comboTransportes;
+    private JComboBox<Transporte> comboTransportes;
     private JTextField txtCantPasajeros;
+    private JLabel lblCapacidad;
+    private JComboBox<ResponsableABordo> comboResponsables;
+    private JLabel lblResponsable;
     private JButton btnCrear;
-    private JButton btnAsignarResponsables;
 
     private ViajeController viajeController;
     private DestinoController destinoController;
@@ -35,16 +37,49 @@ public class CrearViajeView extends JFrame {
     }
 
     private void initUI() {
-        setSize(500, 300);
+        setSize(520, 320);
         setLocationRelativeTo(null);
         setLayout(new GridLayout(5, 2, 10, 10));
 
         comboDestinos = new JComboBox<>();
         comboTransportes = new JComboBox<>();
-        txtCantPasajeros = new JTextField();
+        lblResponsable = new JLabel("Responsable a bordo:");
+        comboResponsables = new JComboBox<>();
+        comboResponsables.setEnabled(false);
         btnCrear = new JButton("Crear Viaje");
-        btnAsignarResponsables = new JButton("Asignar Responsables");
-        btnAsignarResponsables.setEnabled(false);
+
+        // Renderer para comboTransportes: TIPO DE TRANSPORTE | PATENTE
+        comboTransportes.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Transporte) {
+                    Transporte t = (Transporte) value;
+                    setText(obtenerTipoTransporte(t) + " | " + t.getPatente());
+                }
+                return this;
+            }
+        });
+
+        // Formato visual para mostrar responsable como: NOMBRE | DNI
+        comboResponsables.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof ResponsableABordo) {
+                    ResponsableABordo r = (ResponsableABordo) value;
+                    setText(r.GetNombre() + " | " + r.GetDni());
+                }
+                return this;
+            }
+        });
+
+        // Panel para pasajeros con indicador de capacidad máxima
+        JPanel panelPasajeros = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
+        txtCantPasajeros = new JTextField(8);
+        lblCapacidad = new JLabel("/ --");
+        panelPasajeros.add(txtCantPasajeros);
+        panelPasajeros.add(lblCapacidad);
 
         add(new JLabel("Destino:"));
         add(comboDestinos);
@@ -53,20 +88,18 @@ public class CrearViajeView extends JFrame {
         add(comboTransportes);
 
         add(new JLabel("Cantidad de pasajeros:"));
-        add(txtCantPasajeros);
+        add(panelPasajeros);
 
-        add(btnAsignarResponsables);
+        add(lblResponsable);
+        add(comboResponsables);
+
+        add(new JLabel(""));
         add(btnCrear);
 
-        // Cuando se selecciona un destino, se filtran transportes
+        // Listeners
         comboDestinos.addActionListener(e -> actualizarTransportes());
-
+        comboTransportes.addActionListener(e -> actualizarCapacidad());
         btnCrear.addActionListener(e -> crearViaje());
-
-        btnAsignarResponsables.addActionListener(e -> {
-            // Abrir la vista para asignar responsables
-            new AsignarResponsableView().setVisible(true);
-        });
 
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
@@ -87,6 +120,16 @@ public class CrearViajeView extends JFrame {
         }
     }
 
+    private void cargarResponsablesDisponibles() {
+        comboResponsables.removeAllItems();
+        Set<ResponsableABordo> responsables = Agencia.getInstance().getResponsables();
+        for (ResponsableABordo r : responsables) {
+            if (r.GetEstaDisp()) {
+                comboResponsables.addItem(r);
+            }
+        }
+    }
+
     private void actualizarTransportes() {
         try {
             String nombreDestino = (String) comboDestinos.getSelectedItem();
@@ -94,36 +137,73 @@ public class CrearViajeView extends JFrame {
             comboTransportes.removeAllItems();
 
             esLargaDistancia = destino.getCantKm() > 100;
-            btnAsignarResponsables.setEnabled(esLargaDistancia);
+            comboResponsables.setEnabled(esLargaDistancia);
+
+            if (esLargaDistancia) {
+                cargarResponsablesDisponibles();
+            } else {
+                comboResponsables.removeAllItems();
+            }
 
             Set<Transporte> transportes = Agencia.getInstance().getTransportes();
             for (Transporte t : transportes) {
                 String clase = t.getClass().getSimpleName();
                 if (esLargaDistancia && clase.equals("Auto")) continue; // No autos en larga distancia
                 if (!esLargaDistancia && clase.equals("ColectivoCocheCama")) continue; // No coche cama en corta distancia
-                comboTransportes.addItem(t.getPatente());
+                comboTransportes.addItem(t);
             }
+            if (comboTransportes.getItemCount() > 0) {
+                comboTransportes.setSelectedIndex(0);
+            }
+            actualizarCapacidad();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error filtrando transportes: " + e.getMessage());
         }
     }
 
+    private void actualizarCapacidad() {
+        Transporte t = (Transporte) comboTransportes.getSelectedItem();
+        if (t != null) {
+            lblCapacidad.setText("/ " + t.getCapacidadPasajeros());
+        } else {
+            lblCapacidad.setText("/ --");
+        }
+    }
+
+    private String obtenerTipoTransporte(Transporte t) {
+        if (t instanceof Auto) return "Auto";
+        if (t instanceof Combi) return "Combi";
+        if (t instanceof ColectivoSemiCama) return "Colectivo Semi Cama";
+        if (t instanceof ColectivoCocheCama) return "Colectivo Coche Cama";
+        return t.getClass().getSimpleName();
+    }
+
     private void crearViaje() {
         try {
             String destino = (String) comboDestinos.getSelectedItem();
-            String patente = (String) comboTransportes.getSelectedItem();
-            int cantPasajeros = Integer.parseInt(txtCantPasajeros.getText());
+            Transporte transporteSeleccionado = (Transporte) comboTransportes.getSelectedItem();
+            if (transporteSeleccionado == null) {
+                throw new ValidacionException("Debe seleccionar un transporte.");
+            }
+            String patente = transporteSeleccionado.getPatente();
+            int cantPasajeros = Integer.parseInt(txtCantPasajeros.getText().trim());
+
+            ResponsableABordo responsableSeleccionado = null;
+            if (esLargaDistancia) {
+                responsableSeleccionado = (ResponsableABordo) comboResponsables.getSelectedItem();
+                if (responsableSeleccionado == null) {
+                    throw new ValidacionException("Debe seleccionar un responsable disponible para el viaje de larga distancia.");
+                }
+            }
 
             Viaje viaje = viajeController.crearViaje(destino, patente, cantPasajeros);
 
-            JOptionPane.showMessageDialog(this, "Viaje creado correctamente: " + viaje.getNombre());
-
-            // Si es larga distancia, habilitar asignación de responsables
-            if (esLargaDistancia) {
-                btnAsignarResponsables.setEnabled(true);
-            } else {
-                dispose();
+            if (esLargaDistancia && responsableSeleccionado != null) {
+                viajeController.asignarResponsableAViaje(viaje.getIdViaje(), responsableSeleccionado.GetDni());
             }
+
+            JOptionPane.showMessageDialog(this, "Viaje creado correctamente: " + viaje.getNombre());
+            dispose();
 
         } catch (ValidacionException ve) {
             JOptionPane.showMessageDialog(this, "Error: " + ve.getMessage());

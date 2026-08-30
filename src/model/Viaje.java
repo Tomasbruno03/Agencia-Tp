@@ -107,6 +107,8 @@ public abstract class Viaje implements Comparable <Viaje>, Serializable {
             throw new IllegalStateException("Solo se puede avanzar un viaje en curso.");
         if (delta <= 0)
             throw new IllegalArgumentException("La distancia debe ser positiva.");
+        if (avanceKmRecorridos + delta > getKmTotales())
+            throw new IllegalArgumentException("Los kilómetros acumulados no pueden superar los kilómetros totales del viaje (" + getKmTotales() + " km).");
         avanceKmRecorridos += delta;
     }
 

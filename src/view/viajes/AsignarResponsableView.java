@@ -53,6 +53,17 @@ public class AsignarResponsableView extends JFrame {
         panel.add(new JLabel("Viaje:"), gbc);
 
         comboViajes = new JComboBox<>();
+        comboViajes.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof Viaje) {
+                    Viaje v = (Viaje) value;
+                    setText(v.getDestinoDelViaje().getNombre() + " | " + v.getEstado());
+                }
+                return this;
+            }
+        });
         cargarViajes();
         if (comboViajes.getItemCount() > 0) comboViajes.setSelectedIndex(0); // seleccionar primero
         gbc.gridx = 1;
@@ -65,6 +76,17 @@ public class AsignarResponsableView extends JFrame {
         panel.add(new JLabel(modoQuitar ? "Responsable asignado:" : "Responsable disponible:"), gbc);
 
         comboResponsables = new JComboBox<>();
+        comboResponsables.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof ResponsableABordo) {
+                    ResponsableABordo r = (ResponsableABordo) value;
+                    setText(r.GetNombre() + " | " + r.GetDni());
+                }
+                return this;
+            }
+        });
         gbc.gridx = 1;
         gbc.gridy = 1;
         panel.add(comboResponsables, gbc);
@@ -116,7 +138,15 @@ public class AsignarResponsableView extends JFrame {
         // Recorre todos los transportes y sus viajes
         for (Transporte t : agencia.getTransportes()) {
             for (Viaje v : t.getListaViajes()) {
-                comboViajes.addItem(v);
+                if (modoQuitar) {
+                    if (v.estaPendiente()) {
+                        comboViajes.addItem(v);
+                    }
+                } else {
+                    if (!v.estaFinalizado()) {
+                        comboViajes.addItem(v);
+                    }
+                }
             }
         }
     }

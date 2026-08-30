@@ -34,7 +34,7 @@ public class Destino implements Comparable <Destino>, Serializable {
     
     @Override
     public String toString() {
-        return "Destino{nombre='" + Nombre + "', cantKm=" + CantKm + "}";
+        return Nombre;
     }
 
     @Override

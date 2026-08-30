@@ -125,10 +125,13 @@ public class MainWindow extends JFrame {
         JMenu responsablesMenu = new JMenu("Responsables");
         JMenuItem listarResponsables = new JMenuItem("Listar responsables");
         JMenuItem crearResponsable = new JMenuItem("Crear responsable");
+        JMenuItem quitarResponsable = new JMenuItem("Quitar responsable");
         listarResponsables.addActionListener(e -> new ResponsableView(responsableController).setVisible(true));
         crearResponsable.addActionListener(e -> new CrearResponsableDialog(responsableController).setVisible(true));
+        quitarResponsable.addActionListener(e -> new AsignarResponsableView(true).setVisible(true));
         responsablesMenu.add(listarResponsables);
         responsablesMenu.add(crearResponsable);
+        responsablesMenu.add(quitarResponsable);
         menuBar.add(responsablesMenu);
 
         // --- Viajes ---
@@ -136,19 +139,16 @@ public class MainWindow extends JFrame {
         JMenuItem crearViaje = new JMenuItem("Crear viaje");
         JMenuItem gestionarViaje = new JMenuItem("Iniciar / avanzar / finalizar viaje");
         JMenuItem asignarResponsable = new JMenuItem("Asignar responsable");
-        JMenuItem quitarResponsable = new JMenuItem("Quitar responsable");
         JMenuItem consultarViajes = new JMenuItem("Consultar viajes");
 
         crearViaje.addActionListener(e -> new CrearViajeView(viajeController, destinoController, transporteController).setVisible(true));
         gestionarViaje.addActionListener(e -> new GestionEstadoViajeView().setVisible(true));
         asignarResponsable.addActionListener(e -> new AsignarResponsableView().setVisible(true));
-        quitarResponsable.addActionListener(e -> new AsignarResponsableView(true).setVisible(true));
         consultarViajes.addActionListener(e -> new ConsultasViajesView().setVisible(true));
 
         viajesMenu.add(crearViaje);
         viajesMenu.add(gestionarViaje);
         viajesMenu.add(asignarResponsable);
-        viajesMenu.add(quitarResponsable);
         viajesMenu.add(consultarViajes);
         menuBar.add(viajesMenu);
 
